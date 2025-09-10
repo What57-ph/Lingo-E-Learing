@@ -65,6 +65,11 @@ export const addMultipleQuestions = async (questionList) => {
     const response = await instance.post(URL, questionList);
     return (await response).data;
 }
+export const getAllQuestionForTest = async (testId) => {
+    const URL = `/question/all/${testId}`;
+    const res = await instance.get(URL, testId);
+    return (await res).data;
+}
 //crud media resource
 export const getAllResource = async () => {
     const URL = "/resource/all";

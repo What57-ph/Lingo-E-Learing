@@ -35,6 +35,8 @@ public interface QuestionService {
     ResQuestionDTO getOne(long id) throws Exception;
 
     void saveAll(List<ReqCreateQuestionDTO> reqListQuestion);
+
+    List<ResQuestionDTO> findByTestId(long Id);
 }
 
 @RequiredArgsConstructor
@@ -120,6 +122,16 @@ class QuestionServiceImpl implements QuestionService {
         })
                 .collect(Collectors.toList());
         repository.saveAll(questions);
+
+    }
+
+    @Override
+    public List<ResQuestionDTO> findByTestId(long testId) {
+        List<Question> questions = repository.findAllByTestId(testId);
+        List<ResQuestionDTO> resQuestions = questions.stream().map(question -> {
+            return mapper.toQuestionResponse(question);
+        }).collect(Collectors.toList());
+        return resQuestions;
 
     }
 }

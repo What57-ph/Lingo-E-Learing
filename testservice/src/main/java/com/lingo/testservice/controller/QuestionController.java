@@ -5,11 +5,15 @@ import com.lingo.testservice.model.dto.request.question.ReqQuestionDTO;
 import com.lingo.testservice.model.dto.response.ResQuestionDTO;
 import com.lingo.testservice.service.QuestionService;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/api/v1/question")
@@ -45,6 +49,11 @@ public class QuestionController {
     @PostMapping("/bulk")
     public void saveAllQuestion(@RequestBody List<ReqCreateQuestionDTO> list) {
         questionService.saveAll(list);
+    }
+
+    @GetMapping("/all/{testId}")
+    public ResponseEntity<List<ResQuestionDTO>> getAllQuestionForTest(@PathVariable("testId") long testId) {
+        return ResponseEntity.ok().body(questionService.findByTestId(testId));
     }
 
 }

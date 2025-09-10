@@ -12,6 +12,7 @@ import CreateTestPage from './pages/admin/CreateTestPage';
 import UserPage from './pages/admin/UserPage';
 import TestPage from './pages/admin/TestPage';
 import DashboardPage from './pages/admin/DashboardPage';
+import HavingTestPage from './pages/client/HavingTestPage';
 function App() {
 
   const router = createBrowserRouter([
@@ -56,6 +57,23 @@ function App() {
         {
           index: true,
           element: <HomePage />,
+        },
+        {
+          path: "test",
+          children: [
+            {
+              path: "beforeTest",
+              element: <></>
+            },
+            {
+              path: "havingTest",
+              element: <HavingTestPage />
+            },
+            {
+              path: "afterTest",
+              element: <></>
+            }
+          ]
         }
       ],
     },

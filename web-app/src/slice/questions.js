@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { addMultipleQuestions, addQuestion, deleteQuestion, getAllQuestions, getOneQuestion, updateQuestion } from "../service/TestService";
+import { addMultipleQuestions, addQuestion, deleteQuestion, getAllQuestionForTest, getAllQuestions, getOneQuestion, updateQuestion } from "../service/TestService";
 
 const initialState = [];
 
@@ -45,6 +45,13 @@ export const saveMultipleQuestions = createAsyncThunk(
     }
 )
 
+export const retrieveQuestionForTest = createAsyncThunk(
+    "question/testQuestions",
+    async (id) => {
+        return await getAllQuestionForTest(id);
+    }
+)
+
 const questionSlice = createSlice({
     name: "question",
     initialState,
@@ -71,6 +78,9 @@ const questionSlice = createSlice({
         },
         [saveMultipleQuestions.fulfilled]: (state, action) => {
             state.push(action.payload);
+        },
+        [retrieveAllQuestions.fulfilled]: (state, action) => {
+            return [...action.payload];
         }
     }
 })
