@@ -2,6 +2,8 @@ import React, { useContext } from 'react';
 import { Outlet } from "react-router-dom";
 import AuthContext from '../contexts/AuthContext';
 import { Button } from 'antd';
+import Cookies from 'js-cookie';
+import { refreshToken } from '../config/AxiosConfig';
 
 export default function ClientLayout() {
 
@@ -12,6 +14,12 @@ export default function ClientLayout() {
         console.log("Logout clicked");
     }
 
+    const handleRefresh = () => {
+        refreshToken();
+    }
+
+    const refresh = Cookies.get('refresh_token');
+
 
     return (
         <div>
@@ -19,6 +27,10 @@ export default function ClientLayout() {
             <Outlet />
 
             <Button onClick={handleLogout}>Logout</Button>
+            <Button onClick={handleRefresh}>Get refresh</Button>
+            <div>This is cookie:  {refresh}</div>
+
+            <div></div>
         </div>
     );
 }
