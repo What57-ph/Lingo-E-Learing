@@ -15,6 +15,7 @@ import DashboardPage from './pages/admin/DashboardPage';
 import ListTestsPage from './pages/tests/ListTestsPage';
 import BeforeTestPage from './pages/tests/BeforeTestPage';
 import AfterTestPage from './pages/tests/AfterTestPage';
+import TestListPage from './pages/tests/TestListPage';
 function App() {
 
   const router = createBrowserRouter([
@@ -59,6 +60,10 @@ function App() {
         {
           index: true,
           element: <HomePage />,
+        },
+        {
+          path: "tests",
+          element: <TestListPage />,
         },
         {
           path: "tests/:id/:name",
