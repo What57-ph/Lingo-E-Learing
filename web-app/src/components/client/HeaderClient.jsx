@@ -58,11 +58,7 @@ const HeaderClient = () => {
 
     return (
 
-        <Header className="!bg-[#ffffff] !px-16 !py-10 shadow-white drop-shadow-xl shadow flex justify-between items-center px-6 sticky top-0 z-50">
-            <Link className="flex gap-2 justify-center items-center">
-                <FaGraduationCap className="text-5xl text-white bg-gradient-to-r from-[#0349bb] to-[#6306dd] p-1 rounded-xl" />
-                <div className="text-black text-2xl font-bold text-center py-4">
-                    TestPro
+
 
         <Header className="!bg-[#ffffff] !px-16 !py-10 shadow-[#ffffff] drop-shadow-xl shadow flex justify-between items-center px-6 sticky top-0 z-50">
             <Link className="flex gap-2 justify-center items-center">

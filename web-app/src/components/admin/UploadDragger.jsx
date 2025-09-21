@@ -19,6 +19,9 @@ const UploadDragger = ({ type, testTitle, mediaUrl }) => {
             })
         return false;
     }
+    const beforeUploadAudio = (file) => {
+
+    }
     return (
         <Card className="uploadFrame">
             <Upload.Dragger

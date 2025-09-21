@@ -13,11 +13,11 @@ import UserPage from './pages/admin/UserPage';
 import TestPage from './pages/admin/TestPage';
 import DashboardPage from './pages/admin/DashboardPage';
 
-import HavingTestPage from './pages/client/HavingTestPage';
 
 import ListTestsPage from './pages/tests/ListTestsPage';
 import BeforeTestPage from './pages/tests/BeforeTestPage';
 import AfterTestPage from './pages/tests/AfterTestPage';
+import HavingTestPage from './pages/tests/HavingTestPage';
 
 function App() {
 
