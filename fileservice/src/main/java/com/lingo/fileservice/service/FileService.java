@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,7 +21,9 @@ import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 import com.google.cloud.storage.Storage.BlobListOption;
+
 import com.lingo.fileservice.domain.FileResponse;
+import com.lingo.fileservice.enums.FileCategory;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -27,10 +31,11 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 
 public interface FileService {
-        FileResponse uploadSingleFile(MultipartFile file, String testTitle)
+        FileResponse uploadSingleFile(MultipartFile file, String testTitle, FileCategory fileCategory)
                         throws IOException;
 
-        List<FileResponse> uploadMultipleFiles(MultipartFile[] files, String testTitle) throws IOException;
+        List<FileResponse> uploadMultipleFiles(MultipartFile[] files, String testTitle, FileCategory fileCategory)
+                        throws IOException;
 
 }
 
@@ -47,6 +52,8 @@ class FileServiceImpl implements FileService {
         // String objectName;
         @Value("${spring.cloud.gcp.credentials.location}")
         String credentialFilePath;
+
+        Logger log = LoggerFactory.getLogger(FileServiceImpl.class);
 
         public boolean doesFolderExist(String prefix) throws FileNotFoundException, IOException {
                 Storage storage = StorageOptions
@@ -80,7 +87,7 @@ class FileServiceImpl implements FileService {
         }
 
         @Override
-        public FileResponse uploadSingleFile(MultipartFile file, String testTitle)
+        public FileResponse uploadSingleFile(MultipartFile file, String testTitle, FileCategory fileCategory)
                         throws IOException {
                 // The ID of your GCP project
                 // String projectId = "your-project-id";
@@ -138,16 +145,19 @@ class FileServiceImpl implements FileService {
                                 .mediaUrl(String.format("https://storage.cloud.google.com/%s/%s", bucketName,
                                                 finalName))
                                 .message("Upload file successful!")
+                                .fileCategory(fileCategory)
                                 .build();
+                log.info(">>>>>Upload " + finalName + "successfully");
                 return response;
         }
 
         @Override
-        public List<FileResponse> uploadMultipleFiles(MultipartFile[] files, String testTitle) {
+        public List<FileResponse> uploadMultipleFiles(MultipartFile[] files, String testTitle,
+                        FileCategory fileCategory) {
 
                 List<FileResponse> responses = Arrays.stream(files).map(file -> {
                         try {
-                                return uploadSingleFile(file, testTitle);
+                                return uploadSingleFile(file, testTitle, fileCategory);
                         } catch (IOException e) {
 
                                 return FileResponse.builder().fileName(file.getOriginalFilename()).mediaUrl("")

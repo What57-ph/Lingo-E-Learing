@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import * as XLSX from "xlsx";
+import { uploadMultipleFiles } from "../service/FileService";
+import { FaFileUpload } from "react-icons/fa";
 
 export const readExcelFile = createAsyncThunk(
     "files/readExcelFile",
@@ -19,6 +21,16 @@ export const readExcelFile = createAsyncThunk(
     }
 );
 
+export const saveMultipleFiles = createAsyncThunk(
+    "files/uploadMultipleFiles",
+    async ({ files, testTitle, fileCategory }, { dispatch }) => {
+        return await uploadMultipleFiles(files, testTitle, fileCategory, (percent) => {
+            dispatch(updateProgress(percent));  // <-- update slice
+        });
+    }
+);
+
+
 const fileSlice = createSlice({
     name: "file",
     initialState: {
@@ -27,6 +39,8 @@ const fileSlice = createSlice({
         answerList: [],
         loading: false,
         error: null,
+        uploadedFiles: [],
+        uploadPercent: 0
     },
     reducers: {
         extractData: (state, action) => {
@@ -63,7 +77,11 @@ const fileSlice = createSlice({
             state.questionList = questions;
             state.answerList = answers;
         },
+        updateProgress: (state, action) => {
+            state.uploadPercent = action.payload
+        },
     },
+
     extraReducers: (builder) => {
         builder
             .addCase(readExcelFile.pending, (state) => {
@@ -77,10 +95,21 @@ const fileSlice = createSlice({
             .addCase(readExcelFile.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
-            });
+            })
+            .addCase(saveMultipleFiles.fulfilled, (state, action) => {
+                state.loading = false;
+                state.uploadedFiles.push(action.payload);
+            })
+            .addCase(saveMultipleFiles.pending, (state, action) => {
+                state.loading = true;
+                state.error = null
+            }).addCase(saveMultipleFiles.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
+            })
     },
 });
 
 const { reducer } = fileSlice;
 export default reducer;
-export const { extractData } = fileSlice.actions;
+export const { extractData, updateProgress } = fileSlice.actions;

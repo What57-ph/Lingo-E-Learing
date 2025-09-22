@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.lingo.fileservice.domain.FileResponse;
+import com.lingo.fileservice.enums.FileCategory;
 import com.lingo.fileservice.service.FileService;
 
 import lombok.AccessLevel;
@@ -28,9 +29,9 @@ public class FileController {
 
     @PostMapping("/upload")
     public ResponseEntity<FileResponse> uploadFile(@RequestParam(name = "file", required = false) MultipartFile file,
-            @RequestParam("testTitle") String testTitle)
+            @RequestParam("testTitle") String testTitle, @RequestParam("fileCategory") FileCategory fileCategory)
             throws IOException {
-        FileResponse response = fileService.uploadSingleFile(file, testTitle);
+        FileResponse response = fileService.uploadSingleFile(file, testTitle, fileCategory);
 
         return ResponseEntity.ok().body(response);
     }
@@ -38,9 +39,10 @@ public class FileController {
     @PostMapping("/uploadMany")
     public ResponseEntity<List<FileResponse>> uploadMultipleFiles(
             @RequestParam(name = "files", required = false) MultipartFile[] files,
-            @RequestParam("testTitle") String testTitle)
+            @RequestParam("testTitle") String testTitle,
+            @RequestParam("fileCategory") FileCategory fileCategory)
             throws IOException {
-        List<FileResponse> response = fileService.uploadMultipleFiles(files, testTitle);
+        List<FileResponse> response = fileService.uploadMultipleFiles(files, testTitle, fileCategory);
 
         return ResponseEntity.ok().body(response);
     }

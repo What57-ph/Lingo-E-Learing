@@ -1,5 +1,7 @@
 package com.lingo.fileservice.domain;
 
+import com.lingo.fileservice.enums.FileCategory;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,4 +18,5 @@ public class FileResponse {
     String fileName;
     String mediaUrl;
     String message;
+    FileCategory fileCategory;
 }

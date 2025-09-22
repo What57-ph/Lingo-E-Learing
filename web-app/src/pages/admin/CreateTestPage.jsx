@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Card, Form, Input, Progress, Select, Upload } from 'antd';
 import {
-
     UploadOutlined,
     EyeOutlined,
     SaveOutlined,
@@ -15,6 +14,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { createTest } from '../../slice/tests';
 import { saveMultipleQuestions } from '../../slice/questions';
 import { useWatch } from 'antd/es/form/Form';
+import { FaRegImage } from 'react-icons/fa6';
+import _ from "lodash";
 
 const CreateTestPage = () => {
     const initialTestState = {
@@ -24,11 +25,13 @@ const CreateTestPage = () => {
         timeLimit: null,
         numberQuestion: 0,
         maxScore: 0,
-        description: ""
+        description: "",
+        mediaUrl: ""
     };
     const [test, setTest] = useState(initialTestState);
     const [submitted, setSubmitted] = useState(false);
-    const { questionList, answerList } = useSelector((state) => state.file);
+    const [groupedUploadedFiles, setGroupedUploadedFiles] = useState();
+    const { questionList, answerList, uploadPercent, uploadedFiles, loading } = useSelector((state) => state.file);
     const dispatch = useDispatch();
     const [form] = Form.useForm();
     const testTitle = useWatch("title", form);
@@ -50,7 +53,20 @@ const CreateTestPage = () => {
         setTest(initialTestState);
         setSubmitted(false);
     }
-    console.log("Questions:", questionList);
+    useEffect(() => {
+        setGroupedUploadedFiles(_.groupBy(uploadedFiles.flat(), "fileCategory"));
+        console.log("Grouped files:", groupedUploadedFiles)
+    }, [uploadedFiles])
+    useEffect(() => {
+        console.log("url:", uploadedFiles[0]?.mediaUrl)
+        if (type === "LISTENING_AUDIO") {
+            form.setFieldValue({
+                mediaUrl: uploadedFiles.mediaUrl
+            });
+        }
+        console.log(form.getFieldValue("mediaUrl"));
+    }, [uploadedFiles[0]?.mediaUrl])
+    // console.log("Questions:", questionList);
     // console.log("Test title before upload:", form.getFieldValue("title"));
     return (
         <>
@@ -60,7 +76,7 @@ const CreateTestPage = () => {
                     Tạo và quản lý các bài thi IELTS, TOEIC một cách dễ dàng
                 </p>
 
-                <Form layout="vertical" form={form} onFinish={onFinish}>
+                <Form layout="vertical" form={form} onFinish={onFinish} encType={test.type === "Excel" ? "multipart/form-data" : ""}>
                     <div className="grid grid-cols-2 gap-4">
                         <Form.Item label="Tên bài thi" className="col-span-1" name="title">
                             <Input placeholder="Nhập tên bài thi..." className='!h-12' onChange={() => { console.log("Test title before upload:", form.getFieldValue("title")); }} />
@@ -80,14 +96,20 @@ const CreateTestPage = () => {
                                 testTitle={testTitle}
                                 mediaUrl={mediaUrl} />
                         </div>
-
+                        <Form.Item name="mediaUrl" className="hidden" />
                         <div>
-                            <p className="draggerTittle">  <HiSpeakerWave className='text-blue-600 text-xl' />File âm thanh (Tùy chọn)</p>
-                            <UploadDragger type={"Audio"} />
+                            <p className="draggerTittle">  <HiSpeakerWave className='text-blue-600 text-xl' />File âm thanh</p>
+                            <UploadDragger type={"LISTENING_AUDIO"} form={form} />
                         </div>
-
+                        <div>
+                            <p className="draggerTittle">  <HiSpeakerWave className='text-blue-600 text-xl' />File âm thanh đáp án listening</p>
+                            <UploadDragger type={"QUESTION_AUDIO"} form={form} />
+                        </div>
+                        <div>
+                            <p className="draggerTittle">  <FaRegImage className='text-orange-900 text-xl' />File hình ảnh câu hỏi</p>
+                            <UploadDragger type={"QUESTION_IMAGE"} form={form} />
+                        </div>
                     </div>
-
                     {/* Exam Settings */}
                     <div className="grid grid-cols-3 gap-4">
                         <Form.Item label="Thời gian làm bài (phút)" name="timeLimit">
@@ -126,7 +148,12 @@ const CreateTestPage = () => {
                 <h3 className="text-lg font-semibold mb-3">Tiến độ tạo bài thi</h3>
                 <div className="flex flex-col gap-2">
                     <Progress percent={100} format={() => "Thông tin cơ bản"} />
-                    <Progress percent={66} format={() => "Upload file câu hỏi"} />
+                    <Progress
+                        percent={uploadPercent}
+                        format={() => "Upload file câu hỏi"}
+                        status={loading ? "active" : uploadPercent === 100 ? "success" : "normal"}
+                    />
+
                     <Progress percent={33} format={() => "Hoàn thành và xuất bản"} />
                 </div>
             </Card >
