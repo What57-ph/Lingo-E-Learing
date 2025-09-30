@@ -98,14 +98,10 @@ function App() {
           element: <HomePage />,
         },
         {
-<<<<<<< HEAD
           path: "tests",
           element: <TestListPage />,
         },
         {
-=======
-
->>>>>>> DucNM/Authentication
           path: "tests/:id/:name",
           element: <BeforeTestPage />,
         },
