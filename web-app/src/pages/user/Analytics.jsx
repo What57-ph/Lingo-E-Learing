@@ -13,15 +13,16 @@ const Analytics = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { attempts } = useSelector(state => state.attempts);
+  const { user } = useSelector((state) => state.authentication);
   const params = new URLSearchParams(window.location.search);
   const category = params.get("category");
 
-  console.log(attempts);
+  // console.log(attempts);
 
   const [hisType, setHisType] = useState("");
   const [hisTime, setHisTime] = useState("30");
 
-  const userId = "b3dbd68b-0613-466c-9037-ebdea8a184c1";
+  const userId = user?.sub;
 
   useEffect(() => {
     dispatch(retrieveAttempts(userId));

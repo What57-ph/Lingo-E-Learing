@@ -35,7 +35,7 @@ export const retrieveAttempts = createAsyncThunk(
     try {
       const res = await getAttemptUserShort(userId);
       // return res;
-      return res.data;
+      return res;
     } catch (err) {
       if (err.response && err.response.data) {
         return rejectWithValue(err.response.data);

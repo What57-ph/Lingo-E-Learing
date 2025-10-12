@@ -189,7 +189,7 @@ const HeaderClient = () => {
                                 <FaClipboard className="mr-2 text-sm" />
                                 Đề thi online
                             </Link>
-                            <Link href="#" className={`${location.pathname === '/analytics' ? "!text-blue-600 !bg-blue-50 !rounded-lg" : "!text-gray-700 hover:!text-blue-600"} 
+                            <Link to={"/analytics"} className={`${location.pathname === '/analytics' ? "!text-blue-600 !bg-blue-50 !rounded-lg" : "!text-gray-700 hover:!text-blue-600"} 
                                 flex items-center justify-center h-full p-2` }>
                                 <FaChartLine className="mr-2 text-sm" />
                                 Thống kê điểm
