@@ -20,3 +20,16 @@
   }
 }
 
+@layer components {
+  .filter-tabs {
+    @apply bg-slate-50 rounded-xl p-1;
+  }
+
+  .filter-tab {
+    @apply px-4 py-2 rounded-lg transition-all duration-300 cursor-pointer;
+  }
+
+  .filter-tab.active {
+    @apply bg-[#ffffff] shadow-md;
+  }
+}

@@ -3,10 +3,14 @@ import Brc from "../BreadCum"
 import { BookFilled, BulbFilled, CaretRightFilled, ClockCircleFilled, ClockCircleOutlined, CommentOutlined, CustomerServiceOutlined, DislikeFilled, ExclamationCircleOutlined, EyeFilled, HeartOutlined, LikeFilled, PlayCircleFilled, QuestionCircleFilled, QuestionCircleOutlined, ReadFilled, ReadOutlined, ShareAltOutlined, StarFilled, TeamOutlined, ThunderboltOutlined, UnorderedListOutlined, UserOutlined, WechatFilled } from '@ant-design/icons';
 import BoxComment from "../../components/tests/BoxComment";
 import RightSider from "../../components/tests/RightSider";
-
+import HistoryAttempts from "../../components/tests/BeforePage/HistoryAttempts";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const BeforeTestPage = () => {
   const { Text } = Typography;
+  let location = useLocation();
+  let navigate = useNavigate();
+  const handleDoTest = () => navigate(location.pathname + "/doTests");
 
   return (
     <div className="bg-gray-50">
@@ -25,6 +29,7 @@ const BeforeTestPage = () => {
             {/* action */}
 
             <Card className="!shadow-lg !pb-3">
+
               <div className="flex items-start justify-between mb-4">
                 <div>
                   <div className="flex items-center space-x-2 mb-2">
@@ -57,13 +62,15 @@ const BeforeTestPage = () => {
                 </Button>
               </div>
 
+              <HistoryAttempts />
+
               <Card className="!bg-gradient-to-r !from-blue-50 !to-indigo-50">
                 <div className="flex items-center justify-between">
                   <div>
                     <h3 className="text-xl font-bold text-gray-900 mb-2">Sẵn sàng làm bài?</h3>
                     <p className="text-gray-600 text-sm mb-4">Đề thi mô phỏng chính thức TOEIC Reading với 100 câu hỏi trong 75 phút</p>
-                    <div className="flex items-start space-x-4 flex-col md:flex-row md:items-center gap-3 md:gap-0">
-                      <Button color="primary" variant="solid" size="large">
+                    <div className="flex items-start !space-x-4 flex-col md:flex-row md:items-center gap-3 md:gap-0">
+                      <Button color="primary" variant="solid" size="large" onClick={handleDoTest}>
                         <CaretRightFilled className="text-xl text-shadow-gray-200" /> Bắt đầu làm bài
                       </Button>
                       <Button variant="solid" size="large" className="!bg-[FFFFFF]" >
@@ -81,10 +88,10 @@ const BeforeTestPage = () => {
                 {/* <Tag icon={<ExclamationCircleOutlined />} color="warning" className="!mt-4 !py-2 !pr-3 !text-base text-nowrap">
                   <strong>Lưu ý:</strong> Hãy chuẩn bị đầy đủ 75 phút để hoàn thành bài thi. Bạn có thể tạm dừng và tiếp tục sau.
                 </Tag> */}
-                <div class="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-                  <div class="flex items-center gap-1">
+                <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                  <div className="flex items-center gap-1">
                     <BulbFilled className="!text-yellow-600" />
-                    <div class="text-sm text-yellow-800">
+                    <div className="text-sm text-yellow-800">
                       <strong>Lưu ý:</strong> Hãy chuẩn bị đầy đủ 75 phút để hoàn thành bài thi. Bạn có thể tạm dừng và tiếp tục sau.
                     </div>
                   </div>

@@ -1,76 +1,113 @@
 import { useState } from 'react'
 import './App.css'
+import './styles/antStyle.css'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AdminLayout from './layouts/AdminLayout';
 
+import 'react-toastify/dist/ReactToastify.css';
 
 import AuthLayout from './layouts/AuthLayout';
-import LoginPage from './pages/LoginPage';
 import ClientLayout from './layouts/ClientLayout';
 import HomePage from './pages/HomePage';
 import CreateTestPage from './pages/admin/CreateTestPage';
 import UserPage from './pages/admin/UserPage';
 import TestPage from './pages/admin/TestPage';
 import DashboardPage from './pages/admin/DashboardPage';
-import ListTestsPage from './pages/tests/ListTestsPage';
+
+
 import BeforeTestPage from './pages/tests/BeforeTestPage';
 import AfterTestPage from './pages/tests/AfterTestPage';
+import HavingTestPage from './pages/tests/HavingTestPage';
+import LoginPage from './pages/auth/LoginPage';
+import RegisterPage from './pages/auth/RegisterPage';
+import ForgetPage from './pages/auth/ForgetPage';
+import ResetPage from './pages/auth/ResetPage';
+import TestListPage from './pages/tests/TestListPage';
+import ProtectedRoute from './components/share/ProtectedRoute';
+import NotFound from './components/share/NotFound';
+import RootLayout from './layouts/RouteLayout';
 function App() {
-
   const router = createBrowserRouter([
     {
-      path: "/admin",
-      element: (
-        <AdminLayout />
-      ),
-      children: [
-        {
-          index: true,
-          element: <DashboardPage />
-
-        },
-        {
-          path: "user",
-          element: <UserPage />
-        },
-        {
-          path: "test",
-          element: <TestPage />
-        }, {
-          path: "createTest",
-          element: <CreateTestPage />
-        }
-      ]
-    },
-    {
-      path: "/auth",
-      element: <AuthLayout />,
-      children: [
-        {
-          path: "login",
-          element: <LoginPage />,
-        }
-      ],
-    },
-    {
       path: "/",
-      element: <ClientLayout />,
+      element: <RootLayout />,
+      errorElement: <NotFound />,
       children: [
         {
-          index: true,
-          element: <HomePage />,
+          element: <ClientLayout />,
+          children: [
+            {
+              index: true,
+              element: <HomePage />,
+            },
+            {
+              path: "tests",
+              element: <TestListPage />,
+            },
+            {
+              path: "tests/:id/:name",
+              element: <BeforeTestPage />,
+            },
+            {
+              path: "tests/:id/:name/results/:attemptId",
+              element: <AfterTestPage />,
+            },
+            {
+              path: "tests/:id/:name/doTests",
+              element: <HavingTestPage />,
+            },
+          ]
         },
         {
-          path: "tests/:id/:name",
-          element: <BeforeTestPage />,
+          path: "admin",
+          element: (
+            // <ProtectedRoute>
+            <AdminLayout />
+            // </ProtectedRoute>
+          ),
+          children: [
+            {
+              index: true,
+              element: <DashboardPage />
+            },
+            {
+              path: "user",
+              element: <UserPage />
+            },
+            {
+              path: "test",
+              element: <TestPage />
+            },
+            {
+              path: "createTest",
+              element: <CreateTestPage />
+            }
+          ]
         },
         {
-          path: "tests/:id/:name/results",
-          element: <AfterTestPage />,
+          path: "auth",
+          element: <AuthLayout />,
+          children: [
+            {
+              path: "login",
+              element: <LoginPage />,
+            },
+            {
+              path: "register",
+              element: <RegisterPage />,
+            },
+            {
+              path: "forget",
+              element: <ForgetPage />,
+            },
+            {
+              path: "reset",
+              element: <ResetPage />,
+            }
+          ],
         },
-
-      ],
-    },
+      ]
+    }
   ]);
 
   return (
