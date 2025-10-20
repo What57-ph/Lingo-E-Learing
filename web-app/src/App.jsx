@@ -75,7 +75,7 @@ function App() {
               element: <UserPage />
             },
             {
-              path: "test",
+              path: "tests",
               element: <TestPage />
             },
             {
