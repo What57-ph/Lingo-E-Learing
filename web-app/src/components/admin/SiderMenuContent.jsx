@@ -36,7 +36,7 @@ const LogoSection = ({ collapsed }) => (
 const allMenuKeys = [
   "/admin",
   "/admin/tests",
-  "/admin/create-test",
+  "/admin/createTest",
   "/admin/question-bank",
   "/admin/users",
   "/admin/analytics",
@@ -75,8 +75,8 @@ const SiderMenuContent = ({ collapsed, onMenuClick }) => {
             <Item key="/admin/tests" icon={<UnorderedListOutlined />}>
               <Link to="/admin/tests">Danh sách bài thi</Link>
             </Item>
-            <Item key="/admin/create-test" icon={<AppstoreAddOutlined />}>
-              <Link to="/admin/create-test">Tạo bài thi mới</Link>
+            <Item key="/admin/createTest" icon={<AppstoreAddOutlined />}>
+              <Link to="/admin/createTest">Tạo bài thi mới</Link>
             </Item>
             <Item key="/admin/question-bank" icon={<QuestionCircleOutlined />}>
               <Link to="/admin/question-bank">Ngân hàng câu hỏi</Link>

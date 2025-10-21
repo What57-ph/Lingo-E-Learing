@@ -4,38 +4,14 @@ import { Button, Input, Space, Table } from 'antd';
 import Highlighter from 'react-highlight-words';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeTest, retrieveAllTests } from '../../slice/tests';
-
-const data = [
-    {
-        key: '1',
-        name: 'John Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-    },
-    {
-        key: '2',
-        name: 'Joe Black',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-    },
-    {
-        key: '3',
-        name: 'Jim Green',
-        age: 32,
-        address: 'Sydney No. 1 Lake Park',
-    },
-    {
-        key: '4',
-        name: 'Jim Red',
-        age: 32,
-        address: 'London No. 2 Lake Park',
-    },
-];
+import TestModal from '../../components/admin/tests/TestModal';
 
 const TestPage = () => {
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
-    const [testList, setTestList] = useState();
+    const [open, setOpen] = useState(false);
+    const [type, setType] = useState();
+    const [selectedRecord, setSelectedRecord] = useState(null);
     const searchInput = useRef(null);
     const dispatch = useDispatch();
     const { tests } = useSelector(state => state.tests)
@@ -46,7 +22,7 @@ const TestPage = () => {
         getAllTests("page=0&size=10");
     }, []);
     // console.log("all tests:", tests)
-    const handleDeleteTest = async (id) => {
+    const handleDeleteTest = (id) => {
         dispatch(removeTest(id));
     }
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -165,10 +141,10 @@ const TestPage = () => {
             ...getColumnSearchProps('type'),
         },
         {
-            title: 'Category',
-            dataIndex: 'category',
-            key: 'category',
-            ...getColumnSearchProps('category'),
+            title: 'Number of question',
+            dataIndex: 'numOfQuestions',
+            key: 'numOfQuestions',
+            ...getColumnSearchProps('numOfQuestions'),
         },
         {
             title: 'Attempt',
@@ -183,17 +159,26 @@ const TestPage = () => {
             width: "25%",
             render: (_, record) => (
                 <div className='flex gap-2 items-center justify-center'>
-                    <Button danger type="primary" onClick={handleDeleteTest(record.id)}>
+                    <Button danger type="primary" onClick={() => handleDeleteTest(record.id)}>
                         Delete
                     </Button>
                     <Button type="default"
                         className="!bg-blue-500 !text-white hover:!bg-blue-600"
-                        onClick={() => console.log("update test with id: ", record.id)}>
+                        onClick={() => {
+                            setOpen(true);
+                            setType("update");
+                            setSelectedRecord(record);
+                            console.log("current row", record)
+                        }}>
                         Update
                     </Button>
                     <Button type="default"
                         className='!bg-green-500 !text-white hover:!bg-green-600 transition'
-                        onClick={() => console.log("detail of test with id:", record.id)}>
+                        onClick={() => {
+                            setOpen(true);
+                            setType("detail")
+                            setSelectedRecord(record);
+                        }}>
                         Detail
                     </Button>
                 </div>
@@ -202,7 +187,12 @@ const TestPage = () => {
 
     ];
 
-    return <Table columns={columns} dataSource={tests} bordered />;
+    return (
+        <>
+            <Table columns={columns} dataSource={tests} bordered />
+            <TestModal type={type} open={open} setOpen={setOpen} record={selectedRecord} />
+        </>
+    )
 };
 
 export default TestPage;

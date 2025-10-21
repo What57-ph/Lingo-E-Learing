@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="7807224a-69f2-4995-954d-4271220bc1ae" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testservice/src/main/java/com/lingo/testservice/model/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/testservice/src/main/java/com/lingo/testservice/model/Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testservice/src/main/java/com/lingo/testservice/mapper/TestMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/testservice/src/main/java/com/lingo/testservice/mapper/TestMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testservice/src/main/java/com/lingo/testservice/model/dto/response/ResTestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/testservice/src/main/java/com/lingo/testservice/model/dto/response/ResTestDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-app/src/components/admin/SiderMenuContent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/components/admin/SiderMenuContent.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-app/src/pages/admin/TestPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/pages/admin/TestPage.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,25 +81,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.AccountApplication.executor": "Run",
-    "Application.ApiGatewayApplication.executor": "Run",
-    "Application.DiscoveryserverApplication.executor": "Run",
-    "Application.FileserviceApplication.executor": "Run",
-    "Application.TestserviceApplication.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "VinhNC/comment",
-    "last_opened_file_path": "C:/Project/Lingo",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.keymap"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.AccountApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ApiGatewayApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.DiscoveryserverApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.FileserviceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.TestserviceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;VinhNC/comment&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Project/Lingo&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;
   }
-}]]></component>
-  <component name="RunManager" selected="Application.AccountApplication">
+}</component>
+  <component name="RunManager" selected="Application.FileserviceApplication">
     <configuration name="AccountApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.lingo.account.AccountApplication" />
       <module name="account" />
@@ -164,8 +167,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.AccountApplication" />
         <item itemvalue="Application.FileserviceApplication" />
+        <item itemvalue="Application.AccountApplication" />
         <item itemvalue="Application.TestserviceApplication" />
         <item itemvalue="Application.ApiGatewayApplication" />
         <item itemvalue="Application.DiscoveryserverApplication" />
