@@ -28,7 +28,7 @@ ChartJS.register(
     Filler
 );
 
-const BaseStatistic = ({ sampleData, type, label }) => {
+const BaseStatistic = ({ sampleData, type, label, topQuizzes }) => {
 
 
     let color, labelText, chartTitle, yAxisTitle, isScoreChart, chartType;
@@ -58,35 +58,46 @@ const BaseStatistic = ({ sampleData, type, label }) => {
     }
 
 
-    const minVal = Math.min(...sampleData);
-    const maxVal = Math.max(...sampleData);
+    const safeSampleData = Array.isArray(sampleData) ? sampleData : [];
+    const safeLabels = Array.isArray(label) ? label : [];
+
+    const minVal = safeSampleData.length ? Math.min(...safeSampleData) : 0;
+    const maxVal = safeSampleData.length ? Math.max(...safeSampleData) : 0;
 
     let calculatedMax, calculatedStepSize;
 
     if (type === "score-ielts") {
-
         calculatedMax = 9.0;
         calculatedStepSize = 0.5;
     } else {
+        const safeMax = Math.max(5, maxVal);
 
-        const range = maxVal - minVal;
-        const baseStep = range / 5 || 10;
-        const pow = Math.pow(10, Math.floor(Math.log10(baseStep)) || 1);
+        if (safeMax <= 10) {
+            calculatedStepSize = 1;
+            calculatedMax = 10;
+        } else if (safeMax <= 50) {
+            calculatedStepSize = 2;
+            calculatedMax = Math.ceil((safeMax + 2) / 2) * 2;
+        } else if (safeMax <= 100) {
+            calculatedStepSize = 5;
+            calculatedMax = Math.ceil((safeMax + 5) / 5) * 5;
+        } else {
+            const range = safeMax - minVal;
+            const baseStep = range / 8;
+            const pow = Math.pow(10, Math.floor(Math.log10(baseStep)));
 
-        calculatedStepSize = Math.ceil(baseStep / pow) * pow;
-        if (calculatedStepSize === 0) calculatedStepSize = 1;
-
-        calculatedMax = Math.ceil((maxVal + calculatedStepSize) / calculatedStepSize) * calculatedStepSize;
-        if (calculatedMax < 100 && maxVal < 100) calculatedMax = 100;
+            calculatedStepSize = Math.ceil(baseStep / pow) * pow;
+            calculatedMax = Math.ceil((safeMax + calculatedStepSize) / calculatedStepSize) * calculatedStepSize;
+        }
     }
 
 
     const data = {
-        labels: label,
+        labels: safeLabels,
         datasets: [
             {
                 label: labelText,
-                data: sampleData,
+                data: safeSampleData,
 
 
                 borderColor: color,
@@ -164,7 +175,7 @@ const BaseStatistic = ({ sampleData, type, label }) => {
             </div>
 
 
-            {type === "attempt" && <TopQuizzes />}
+            {type === "attempt" && <TopQuizzes topQuizzes={topQuizzes} />}
         </div>
     );
 };

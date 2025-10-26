@@ -5,14 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7807224a-69f2-4995-954d-4271220bc1ae" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/attempt/src/main/java/com/lingo/attempt/controller/AttemptController.java" beforeDir="false" afterPath="$PROJECT_DIR$/attempt/src/main/java/com/lingo/attempt/controller/AttemptController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/attempt/src/main/java/com/lingo/attempt/dto/ResAttemptDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/attempt/src/main/java/com/lingo/attempt/dto/ResAttemptDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/attempt/src/main/java/com/lingo/attempt/service/AttemptService.java" beforeDir="false" afterPath="$PROJECT_DIR$/attempt/src/main/java/com/lingo/attempt/service/AttemptService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/java/com/lingo/api_gateway/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/java/com/lingo/api_gateway/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-app/src/config/api.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/config/api.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web-app/src/pages/admin/DashboardPage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/pages/admin/DashboardPage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-app/src/slice/attempts.js" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/slice/attempts.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,7 +107,7 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;
   }
 }</component>
-  <component name="RunManager" selected="Application.FileserviceApplication">
+  <component name="RunManager" selected="Application.AccountApplication">
     <configuration name="AccountApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.lingo.account.AccountApplication" />
       <module name="account" />
@@ -178,10 +175,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.FileserviceApplication" />
-        <item itemvalue="Application.AttemptApplication" />
-        <item itemvalue="Application.TestserviceApplication" />
         <item itemvalue="Application.AccountApplication" />
+        <item itemvalue="Application.TestserviceApplication" />
+        <item itemvalue="Application.AttemptApplication" />
+        <item itemvalue="Application.FileserviceApplication" />
         <item itemvalue="Application.ApiGatewayApplication" />
       </list>
     </recent_temporary>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table, Tag, Typography, Button, Avatar } from 'antd';
 import { ClockCircleOutlined, UserOutlined, RightCircleOutlined } from '@ant-design/icons';
+import { useSelector } from 'react-redux';
 
 const { Text } = Typography;
 
@@ -114,6 +115,35 @@ const columns = [
 
 
 const CurrentAttemptsTable = () => {
+    const { allAttempts } = useSelector(state => state.attempts);
+    const { tests } = useSelector(state => state.tests);
+    const { accounts } = useSelector(state => state.accounts);
+
+    const tableData = allAttempts.map(attempt => {
+        const account = accounts.find(acc => String(acc.id) === String(attempt.userId));
+        const test = tests.find(t => t.id === attempt.quizId);
+
+        return {
+            key: `${attempt.quizId}-${attempt.userId}`,
+            quizId: attempt.quizId,
+            testTitle: test?.title || "Unknown Test",
+            userId: attempt.userId,
+            score: attempt.score,
+            timeTaken: attempt.timeTaken,
+            submittedAt: attempt.submittedAt,
+            type: test?.type || "N/A",
+
+            // ✅ Username found using userId === id
+            userName: account?.username || "Unknown User",
+
+            // ✅ Auto initials if no avatar
+            userAvatar: account?.username
+                ? account.username.substring(0, 2).toUpperCase()
+                : "??"
+        };
+    });
+
+
     return (
         <div className='bg-white p-6 shadow-xl rounded-xl mt-10'>
             <Typography.Title level={3} className='!mt-0 !mb-4'>
@@ -122,7 +152,7 @@ const CurrentAttemptsTable = () => {
 
             <Table
                 columns={columns}
-                dataSource={attemptsData}
+                dataSource={tableData}
                 pagination={{ pageSize: 5 }}
                 scroll={{ x: 'max-content' }}
                 className="custom-attempts-table"
@@ -130,5 +160,6 @@ const CurrentAttemptsTable = () => {
         </div>
     );
 };
+
 
 export default CurrentAttemptsTable;

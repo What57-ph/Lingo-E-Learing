@@ -3,7 +3,7 @@ import React from 'react';
 
 const { Text, Title } = Typography;
 
-const TopQuizzes = () => {
+const TopQuizzes = ({ topQuizzes }) => {
     const dataSample = [
         { title: "ETS 2024 Test 1", type: "TOEIC", attempts: 99 },
         { title: "ETS 2024 Test 2", type: "TOEIC", attempts: 96 },
@@ -21,7 +21,7 @@ const TopQuizzes = () => {
             </Title>
 
             <div className='space-y-4'>
-                {dataSample.map((test, index) => (
+                {topQuizzes?.map((test, index) => (
 
                     <div
                         key={index}
