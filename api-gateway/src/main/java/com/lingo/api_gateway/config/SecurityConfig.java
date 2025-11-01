@@ -33,10 +33,11 @@ public class SecurityConfig {
                                 .authorizeExchange(exchange -> exchange
                                                 .pathMatchers("/api/v1/auth/**", "/api/v1/account",
                                                                 "/api/v1/account/**",
-                                                                "/api/v1/test/**", "/api/v1/question/**",
-                                                                "/api/v1/file/**", "/api/v1/answer/**",
+//                                                                "/api/v1/test/**", "/api/v1/question/**",
+                                                                "/api/v1/file/**",
                                                                 "/api/v1/resource/**")
                                                 .permitAll()
+                                                .pathMatchers("/api/v1/account/gg").authenticated()
                                                 // .pathMatchers("api/v1/account/**").hasAuthority("ADMIN")
                                                 .anyExchange().authenticated())
                                 .oauth2ResourceServer(resourceServer -> resourceServer
