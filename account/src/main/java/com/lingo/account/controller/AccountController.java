@@ -110,7 +110,7 @@ public class AccountController {
   @PostMapping("/send-otp")
   public ResponseEntity<String> sendOTP(@RequestParam String email){
     String otp = this.otpService.generateOtp();
-    this.otpService.sendOtp(email, otp);
+    this.accountService.sendOTP(email, otp);
     return ResponseEntity.ok("OTP has been sent!");
   }
 }

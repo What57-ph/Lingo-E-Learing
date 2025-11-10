@@ -1,10 +1,13 @@
 package com.lingo.account.service;
 
+import com.lingo.account.dto.request.RequestMailDTO;
 import com.lingo.account.utils.Constants;
 import com.lingo.common_library.exception.OtpException;
+import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -28,6 +31,7 @@ public interface OtpService {
 class OtpServiceImpl implements OtpService {
 
   private final RedisTemplate<String, Object> redisTemplate;
+  private final NotifyClient notifyClient;
 
   /**
    * {@inheritDoc}
@@ -49,7 +53,16 @@ class OtpServiceImpl implements OtpService {
   @Override
   public void sendOtp(String email, String OTP) {
     redisTemplate.opsForValue().set(email, OTP, Duration.ofMinutes(Constants.Value.OTP_MINUTES));
-    log.info("Storing OTP {} to {} ", OTP, email);
+    try {
+      RequestMailDTO requestMailDTO = new RequestMailDTO(email, OTP);
+      ResponseEntity<String> response = this.notifyClient.sendMailCode(requestMailDTO);
+      log.info("Response from notify client: {}", response.getBody());
+      log.info("Storing OTP {} to {} ", OTP, email);
+    } catch (Exception e) {
+      redisTemplate.delete(email);
+      log.error("Failed to send OTP {} to {}", OTP, email, e);
+      throw new RuntimeException(e);
+    }
   }
 
   /**
