@@ -1,9 +1,6 @@
 package com.lingo.account.controller;
 
-import com.lingo.account.dto.request.ReqAccountDTO;
-import com.lingo.account.dto.request.ReqAccountGGDTO;
-import com.lingo.account.dto.request.ReqAvatarDTO;
-import com.lingo.account.dto.request.ReqUpdateAccountDTO;
+import com.lingo.account.dto.request.*;
 import com.lingo.account.dto.response.ResAccountDTO;
 import com.lingo.account.dto.response.ResPaginationDTO;
 import com.lingo.account.repository.MessageService;
@@ -111,7 +108,7 @@ public class AccountController {
   }
 
   @PostMapping("/send-otp")
-  public ResponseEntity<String> sendOTP(@RequestParam String email, @RequestParam boolean resetPass){
+  public ResponseEntity<String> sendOTP(@RequestParam String email, @RequestParam(defaultValue = "false") boolean resetPass){
     String otp = this.otpService.generateOtp();
     this.accountService.sendOTP(email, otp, resetPass);
     return ResponseEntity.ok("OTP has been sent!");
@@ -124,8 +121,8 @@ public class AccountController {
   }
 
   @PutMapping("/reset-password")
-  public ResponseEntity<String> resetPass(@RequestParam String email, @RequestParam String password){
-    this.keycloakService.resetPassword(email, password);
+  public ResponseEntity<String> resetPass(@RequestBody ReqResetPassDTO req){
+    this.keycloakService.resetPassword(req.getEmail(), req.getPassword());
     return ResponseEntity.ok("Password has been reset!");
   }
 
