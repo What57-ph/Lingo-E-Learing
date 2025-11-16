@@ -120,7 +120,9 @@ export const createAccount = (userData) =>
 export const updateAccount = (userData) =>
   publicInstance.put("/api/v1/account", userData
   );
-
+export const getAccountByUsername = (username) => {
+  return publicInstance.get(`api/v1/account/getByUsername/${username}`);
+};
 
 export const removeAccount = (accountId) => {
   return publicInstance.delete(`api/v1/account/${accountId}`);

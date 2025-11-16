@@ -51,7 +51,7 @@ const PracticeModeModal = ({ isOpen, onClose }) => {
               Luyện tập với thời gian gian tùy chỉnh cùng sự hỗ trợ của AI.
             </p>
             <Link
-              to="/ai-assessment"
+              to="/ai-assessment-page"
               className="w-full !bg-gray-800 hover:!bg-gray-900 !text-white !font-semibold py-3 px-6 rounded-lg flex items-center justify-center gap-2 transition-colors"
               onClick={onClose} // Đóng modal khi nhấn link
             >

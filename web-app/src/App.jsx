@@ -29,6 +29,11 @@ import RootLayout from './layouts/RouteLayout';
 import Analytics from './pages/user/Analytics';
 import Profile from './pages/user/Profile';
 import UserDetailPage from './pages/admin/UserDetailPage';
+import IeltsListListening from './pages/tests/IeltsListListening';
+import IeltsListReading from './pages/tests/IeltsListReading';
+import IeltsListSpeaking from './pages/tests/IeltsListSpeaking';
+import IeltsListWriting from './pages/tests/IeltsListWriting';
+import AIAssessmentPage from './pages/tests/AIAssessmentPage';
 function App() {
   const router = createBrowserRouter([
     {
@@ -42,6 +47,27 @@ function App() {
             {
               index: true,
               element: <HomePage />,
+            },
+            ,
+            {
+              path: "writing",
+              element: <IeltsListWriting />
+            },
+            {
+              path: "listening",
+              element: <IeltsListListening />
+            },
+            {
+              path: "reading",
+              element: <IeltsListReading />
+            },
+            {
+              path: "speaking",
+              element: <IeltsListSpeaking />
+            },
+            {
+              path: "/ai-assessment-page",
+              element: <AIAssessmentPage />
             },
             {
               path: "tests",
