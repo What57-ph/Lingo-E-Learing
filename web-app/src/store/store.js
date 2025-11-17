@@ -3,18 +3,16 @@ import testListSlice from "../slice/testListSlice";
 import attemptSlice from "../slice/attempts"
 import accountSlice from "../slice/accounts"
 import authReducer from '../slice/authentication';
+
+
 import testReducer from "../slice/tests"
 import questionReducer from "../slice/questions";
 import answerReducer from "../slice/answers";
 import fileReducer from "../slice/files";
 import resourceReducer from "../slice/resource";
-
+import speakingSlice from "../slice-ATI/speaking";
+import writingSlice from "../slice-ATI/writing";
 import chatReducer from "../slice/chat";
-import commentReducer from "../slice/commentSlice"
-
-import notificationSlice from "../slice/notifications";
-import settingsSlice from "../slice/notificationSettings";
-
 const reducer = {
     test: testReducer,
     questions: questionReducer,
@@ -26,12 +24,9 @@ const reducer = {
     tests: testListSlice,
     attempts: attemptSlice,
     accounts: accountSlice,
-
-    comments: commentReducer,
-    notifications: notificationSlice,
-    settings: settingsSlice
-
-}
+    speaking: speakingSlice,
+    writing: writingSlice
+};
 export const store = configureStore({
     reducer: reducer,
     devTools: true

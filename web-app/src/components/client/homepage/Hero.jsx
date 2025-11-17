@@ -50,13 +50,13 @@ const Hero = () => {
                         <div className="flex flex-col sm:flex-row gap-4">
                             <Link
                                 to="/signup"
-                                className="academic-button !w-60 flex justify-center items-center !h-16 font-semibold btn-hover !text-lg"
+                                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-[8px] text-lg font-semibold btn-hover"
                             >
                                 Practice by Test Set
                             </Link>
                             <Link
-                                to="/ai-assessment-page"
-                                className="!bg-white border-2 !border-gray-400 !text-gray-700 hover:!bg-gray-100 hover:!border-gray-500 px-8 py-4 rounded-[8px] text-lg font-semibold btn-hover"
+                                to="/ai-assessment"
+                                className="bg-white border-2 border-gray-400 text-gray-700 hover:bg-gray-100 hover:border-gray-500 px-8 py-4 rounded-[8px] text-lg font-semibold btn-hover"
                             >
                                 Practice by Skills
                             </Link>

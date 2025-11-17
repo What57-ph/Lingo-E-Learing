@@ -29,11 +29,16 @@ import RootLayout from './layouts/RouteLayout';
 import Analytics from './pages/user/Analytics';
 import Profile from './pages/user/Profile';
 import UserDetailPage from './pages/admin/UserDetailPage';
+import SpeakingTestPage from './pages-ATI/SpeakingTestPage';
+import SpeakingResultPage from './pages-ATI/SpeakingResultPage';
+import WritingTestPage from './pages-ATI/WritingTestPage';
+import WritingResultPage from './pages-ATI/WritingResultPage';
+import IeltsGrader from './pages/tests/IeltsGrader';
+import IeltsListWriting from './pages/tests/IeltsListWriting';
 import IeltsListListening from './pages/tests/IeltsListListening';
 import IeltsListReading from './pages/tests/IeltsListReading';
-import IeltsListSpeaking from './pages/tests/IeltsListSpeaking';
-import IeltsListWriting from './pages/tests/IeltsListWriting';
 import AIAssessmentPage from './pages/tests/AIAssessmentPage';
+import IeltsListSpeaking from './pages/tests/IeltsListSpeaking';
 function App() {
   const router = createBrowserRouter([
     {
@@ -48,7 +53,6 @@ function App() {
               index: true,
               element: <HomePage />,
             },
-            ,
             {
               path: "writing",
               element: <IeltsListWriting />
@@ -84,9 +88,9 @@ function App() {
             {
               path: "tests/:id/:name/doTests",
               element: (
-                <ProtectedRoute>
-                  <HavingTestPage />
-                </ProtectedRoute>
+                // <ProtectedRoute>
+                <HavingTestPage />
+                // </ProtectedRoute>
               ),
             },
             {
@@ -97,15 +101,26 @@ function App() {
               path: "profile",
               element: <Profile />,
             },
-
+            {
+              path: "writing-test/:id",
+              element: <WritingTestPage />,
+            },
+            {
+              path: "writing-test",
+              element: <WritingTestPage />,
+            },
+            {
+              path: "writing-result/:id",
+              element: <WritingResultPage />,
+            },
           ]
         },
         {
           path: "admin",
           element: (
-            <ProtectedRoute>
-              <AdminLayout />
-            </ProtectedRoute>
+            // <ProtectedRoute>
+            <AdminLayout />
+            // </ProtectedRoute>
           ),
           children: [
             {
@@ -149,9 +164,22 @@ function App() {
             {
               path: "reset",
               element: <ResetPage />,
-            }
+            },
+            // {
+            //   path: "writing-result",
+            //   element: <ResetPage />,
+            // },
+
           ],
         },
+        {
+          path: "speaking-test/:testId",
+          element: <SpeakingTestPage />,
+        },
+        {
+          path: "speaking-result/:attemptId ",
+          element: <SpeakingResultPage />,
+        }
       ]
     }
   ]);

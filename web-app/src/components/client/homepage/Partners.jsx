@@ -1,17 +1,14 @@
 // src/components/Partners.jsx
 import React from "react";
-import idp from "../images/gioi-thieu-ve-idp.jpg";
-import BritishCouncil from "../images/british.png";
-import ipt from "../images/ipp.png";
 
 const Partners = () => {
   const partners = [
-    { name: "IDP", logo: idp },
-    { name: "British Council", logo: BritishCouncil },
-    { name: "IPT IELTS", logo: ipt },
+    { name: "IDP", logo: "/images/gioi-thieu-ve-idp.jpg" },
+    { name: "British Council", logo: "/images/british.png" },
+    { name: "IPT IELTS", logo: "/images/ipp.png" },
     // Thêm các đối tác khác nếu muốn
-    { name: "IDP", logo: idp },
-    { name: "British Council", logo: BritishCouncil },
+    { name: "IDP", logo: "/images/gioi-thieu-ve-idp.jpg" },
+    { name: "British Council", logo: "/images/british.png" },
   ];
 
   // Lặp lại mảng partners để tạo hiệu ứng marquee mượt mà

@@ -1,4 +1,4 @@
-import instance from "../config/AxiosPublicReq";
+import instance from "../config/AxiosConfig";
 
 export const getAllTests = async (params) => {
     const URL = `/api/v1/test/all?${params}`;

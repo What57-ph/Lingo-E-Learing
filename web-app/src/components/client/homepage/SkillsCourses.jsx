@@ -73,7 +73,7 @@ const SkillButton = ({ type, text, href, style }) => {
       // === THAY ĐỔI: Đổi nút "Academic" sang màu Blue ===
       <Link
         to={href}
-        className="academic-button btn-hover"
+        className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-medium btn-hover"
       >
         {text}
       </Link>
@@ -83,7 +83,7 @@ const SkillButton = ({ type, text, href, style }) => {
     return (
       <Link
         to={href}
-        className="academic-button btn-hover"
+        className="text-gray-700 hover:text-blue-600 font-medium flex items-center gap-1 group-link text-lg"
       >
         {text}
         <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover-link:translate-x-1" />
@@ -95,7 +95,7 @@ const SkillButton = ({ type, text, href, style }) => {
     return (
       <button
         disabled
-        className="academic-button btn-hover"
+        className="bg-gray-400 text-white px-5 py-2 rounded-lg font-medium cursor-not-allowed"
       >
         {text}
       </button>
@@ -103,7 +103,7 @@ const SkillButton = ({ type, text, href, style }) => {
   }
   if (style === "disabled-link") {
     return (
-      <span className="academic-button btn-hover">
+      <span className="text-gray-400 font-medium flex items-center gap-1 text-lg cursor-not-allowed">
         {text}
         <ArrowRight className="w-4 h-4" />
       </span>

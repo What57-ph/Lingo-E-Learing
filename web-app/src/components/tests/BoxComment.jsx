@@ -1,129 +1,98 @@
-
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Card, Input, Button, Select } from "antd";
+import { Button, Card, Input, Select } from "antd";
 import SingleComment from "./SingleComment";
-import { retrieveCommentsOfTest, addComment } from "../../slice/commentSlice";
-import { retrieveAccountByUsername } from "../../slice/accounts";
 
-const BoxComment = ({ testId }) => {
+const BoxComment = () => {
   const { TextArea } = Input;
-  const dispatch = useDispatch();
-  const { commentOfTest, loading } = useSelector((state) => state.comments);
-  const { user } = useSelector((state) => state.authentication);
-  const { currentUser } = useSelector((state) => state.accounts);
+  const handleChange = value => {
+    console.log(`selected ${value}`);
+  };
 
-  const [newComment, setNewComment] = useState("");
-  const [sort, setSort] = useState("newest");
-  const [currentCommentMode, setCurrentCommentMode] = useState("COMMENT");
-
-  const buildCommentTree = (comments) => {
-    const map = {};
-    const roots = [];
-
-    comments.forEach((c) => {
-      map[c.id] = { ...c, replies: [] };
-    });
-
-    comments.forEach((c) => {
-      if (c.replyId) {
-        if (map[c.replyId]) {
-          map[c.replyId].replies.push(map[c.id]);
+  const comments = [
+    {
+      id: 1,
+      author: "Nguyễn Thị Lan",
+      time: "2 giờ trước",
+      content: "Bài test này khá hay...",
+      likes: 12,
+      dislikes: 2,
+      replies: [
+        {
+          id: 2,
+          author: "Nguyễn Văn A",
+          time: "1 giờ trước",
+          content: "Mình cũng thấy vậy!",
+          likes: 5,
+          dislikes: 0,
+          replies: [
+            {
+              id: 3,
+              author: "Nguyễn Văn A",
+              time: "1 giờ trước",
+              content: "Mình cũng thấy vậy!",
+              likes: 5,
+              dislikes: 0,
+              replies: []
+            }
+          ]
+        },
+        {
+          id: 4,
+          author: "Nguyễn Văn A",
+          time: "1 giờ trước",
+          content: "Mình cũng thấy vậy!",
+          likes: 5,
+          dislikes: 0,
+          replies: [
+            {
+              id: 5,
+              author: "Nguyễn Văn A",
+              time: "1 giờ trước",
+              content: "Mình cũng thấy vậy!",
+              likes: 5,
+              dislikes: 0,
+              replies: []
+            }
+          ]
         }
-      } else {
-        roots.push(map[c.id]);
-      }
-    });
-
-    return roots;
-  };
-
-  const commentsTree = buildCommentTree(commentOfTest);
-
-  useEffect(() => {
-    if (testId) dispatch(retrieveCommentsOfTest(testId));
-  }, [dispatch, testId]);
-
-  useEffect(() => {
-    if (user?.preferred_username) {
-      dispatch(retrieveAccountByUsername(user.preferred_username));
+      ]
     }
-  }, [dispatch, user]);
-
-  const handlePostComment = () => {
-    if (!newComment.trim()) return;
-
-    dispatch(
-      addComment({
-        content: newComment,
-        testId,
-        type: "COMMENT",
-        userId: currentUser?.keycloakId || null,
-      })
-    ).then(() => {
-      setCurrentCommentMode("COMMENT");
-      setNewComment("");
-      dispatch(retrieveCommentsOfTest(testId));
-    });
-  };
-
-  const handleSortChange = (value) => setSort(value);
+  ];
 
   return (
     <Card className="!shadow-lg !pb-3 !mt-7">
+
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-bold text-gray-900">
-          Bình luận ({commentOfTest?.length || 0})
-        </h2>
-        <Select
-          defaultValue={sort}
-          style={{ width: 130 }}
-          onChange={handleSortChange}
-          options={[
-            { value: "newest", label: "Mới nhất" },
-            { value: "popular", label: "Phổ biến nhất" },
-            { value: "likes", label: "Nhiều tương tác nhất" },
-          ]}
-        />
+        <h2 className="text-xl font-bold text-gray-900">Bình luận (24)</h2>
+        <div className="flex items-center space-x-2">
+          <Select
+            defaultValue="Mới nhất"
+            style={{ width: 130 }}
+            onChange={handleChange}
+            options={[
+              { value: 'newest', label: 'Mới nhất' },
+              { value: 'populate', label: 'Phổ biến nhất' },
+              { value: 'likest', label: 'Nhiều tương tác nhất' },
+            ]}
+          />
+        </div>
       </div>
 
-      {/* Comment Input */}
       <div className="mb-6 p-4 bg-gray-50 rounded-lg">
-        <TextArea
-          rows={4}
-          placeholder="Chia sẻ kinh nghiệm của bạn về bài test này..."
-          value={newComment}
-          onChange={(e) => setNewComment(e.target.value)}
-        />
+        <TextArea rows={4} placeholder="Chia sẻ kinh nghiệm của bạn về bài test này..." />
         <div className="flex justify-end mt-3">
-          <Button type="primary" onClick={handlePostComment}>
+          <Button color="primary" variant="solid">
             Đăng bình luận
           </Button>
         </div>
       </div>
 
-      {/* Render Nested Comments */}
-      <div className="space-y-6">
-        {loading ? (
-          <p>Đang tải bình luận...</p>
-        ) : commentsTree.length > 0 ? (
-          commentsTree
-            .filter((comment) => comment.type === "COMMENT")
-            .map((comment) => (
-              <SingleComment
-                key={comment.id}
-                comment={comment}
-                testId={testId}
-                currentCommentMode={currentCommentMode}
-                setCurrentCommentMode={setCurrentCommentMode}
-              />
-            ))
-        ) : (
-          <p className="text-gray-500">Chưa có bình luận nào.</p>
-        )}
+      <div className="space-y-6 ">
+        {comments.map(comment => (
+          <SingleComment key={comment.id} {...comment} level={1} />
+        ))}
       </div>
-    </Card>
-  );
-};
 
-export default BoxComment;
+    </Card>
+  )
+}
+export default BoxComment

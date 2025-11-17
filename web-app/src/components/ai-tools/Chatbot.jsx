@@ -3,8 +3,7 @@ import { X, Send, Paperclip } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { askAI, askAIWithFile } from "../../slice/chat";
 import { v4 as uuidv4 } from 'uuid';
-import chatbotImg from "../../components/client/images/icon_chatbot.png";
-import { useChatbot } from "../../contexts/ChatbotContext";
+
 const ChatMessage = ({ role, content }) => {
   const isUser = role === "user";
   const renderContent = (text) => {
@@ -31,7 +30,7 @@ const ChatMessage = ({ role, content }) => {
 };
 
 export default function Chatbot() {
-  const { isOpen, setIsOpen } = useChatbot();
+  const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const messagesEndRef = useRef(null);
@@ -153,7 +152,7 @@ export default function Chatbot() {
           className="bg-blue-700 hover:bg-blue-800 text-white w-16 h-16 rounded-full shadow-2xl flex items-center justify-center group relative transition-all duration-300 hover:scale-110"
           aria-label="Open AI Chatbot"
         >
-          <img src={chatbotImg} alt="AI Bot" className="w-15 h-15" />
+          <img src="/images/icon_chatbot.png" alt="AI Bot" className="w-15 h-15" />
         </button>
       )}
 
@@ -169,7 +168,7 @@ export default function Chatbot() {
           <div className="flex justify-between items-center text-white px-5 py-4 rounded-t-2xl">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center p-1">
-                <img src={chatbotImg} alt="LexiBot" className="object-contain" />
+                <img src="/images/icon_chatbot.png" alt="LexiBot" className="object-contain" />
               </div>
               <div>
                 <h3 className="font-bold text-lg">Discuss with LexiPrep</h3>

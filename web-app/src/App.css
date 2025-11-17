@@ -45,10 +45,6 @@
   .quill-better-table {
     @apply !w-full;
   }
-
-  .academic-button {
-    @apply !bg-blue-600 hover:!bg-blue-900 !text-center !text-white px-6 py-2.5 rounded-lg font-medium w-34 h-10 text-[16.5px];
-  }
 }
 .hero-gradient {
   background: linear-gradient(to bottom, #c5d2ff 0%, #a5d2f6 100%);

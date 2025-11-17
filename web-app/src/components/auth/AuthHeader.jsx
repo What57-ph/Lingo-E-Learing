@@ -37,6 +37,7 @@ const AuthHeader = () => {
       <h1 class="text-2xl !font-bold text-gray-800" >{label}</h1>
       <p class="text-gray-600 mt-2" >{welcome}</p>
 
+      {/* form input */}
     </div>
   )
 }

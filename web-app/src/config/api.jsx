@@ -120,9 +120,7 @@ export const createAccount = (userData) =>
 export const updateAccount = (userData) =>
   publicInstance.put("/api/v1/account", userData
   );
-export const getAccountByUsername = (username) => {
-  return publicInstance.get(`api/v1/account/getByUsername/${username}`);
-};
+
 
 export const removeAccount = (accountId) => {
   return publicInstance.delete(`api/v1/account/${accountId}`);
@@ -131,45 +129,3 @@ export const removeAccount = (accountId) => {
 export const updateAvatar = (userData) => {
   publicInstance.post("/api/v1/account/avatar", userData);
 }
-
-// notification starts here 
-
-const notifiURL = "/api/v1/notifications";
-
-export const getNotificationsOfUser = (accountId) => {
-  return publicInstance.get(`${notifiURL}/user/${accountId}`)
-}
-
-export const getNotificationById = (notiId) => {
-  return publicInstance.get(`${notifiURL}/${notiId}`)
-}
-
-export const putNotificationAsRead = (notiId) => {
-  return publicInstance.put(`${notifiURL}/mark-as-read/${notiId}`)
-}
-
-export const deleteNotification = (notiId) => {
-  return publicInstance.delete(`${notifiURL}/${notiId}`)
-}
-
-// notification ends here 
-
-// notification settings start here 
-
-const NotiSettingsURL = "/api/v1/user-settings";
-
-export const getNotiUserSettings = (accountId) => {
-  return publicInstance.get(`${NotiSettingsURL}/${accountId}`)
-}
-
-// export const getNotiUserSettingsEnabled = (accountId) => {
-//   return publicInstance.get(`${NotiSettingsURL}/${accountId}/app-enabled`)
-// }
-
-export const putNotiUserSettings = (settings) => {
-  return publicInstance.put(`${NotiSettingsURL}`,
-    settings
-  )
-}
-
-// notification settings end here 
