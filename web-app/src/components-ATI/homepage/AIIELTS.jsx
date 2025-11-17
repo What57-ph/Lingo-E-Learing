@@ -47,7 +47,7 @@ const PracticeModeModal = ({ isOpen, onClose }) => {
             </p>
             <Link
               to="/writing-test"
-              className="w-full bg-gray-800 hover:bg-gray-900 text-white font-semibold py-3 px-6 rounded-lg flex items-center justify-center gap-2 transition-colors"
+              className="w-full !bg-gray-800 hover:!bg-gray-900 !text-white font-semibold py-3 px-6 rounded-lg flex items-center justify-center gap-2 transition-colors"
               onClick={onClose}
             >
               <RocketOutlined />
@@ -67,7 +67,7 @@ const PracticeModeModal = ({ isOpen, onClose }) => {
             </p>
             <Link
               to="/speaking"
-              className="w-full bg-gray-800 hover:bg-gray-900 text-white font-semibold py-3 px-6 rounded-lg flex items-center justify-center gap-2 transition-colors"
+              className="w-full !bg-gray-800 hover:!bg-gray-900 !text-white font-semibold py-3 px-6 rounded-lg flex items-center justify-center gap-2 transition-colors"
               onClick={onClose}
             >
               <FieldTimeOutlined />
