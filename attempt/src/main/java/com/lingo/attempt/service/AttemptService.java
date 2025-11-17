@@ -1,9 +1,6 @@
 package com.lingo.attempt.service;
 
-import com.lingo.attempt.dto.ReqAttemptDTO;
-import com.lingo.attempt.dto.ResAttemptDTO;
-import com.lingo.attempt.dto.ResAttemptShortDTO;
-import com.lingo.attempt.dto.ResCorrectAns;
+import com.lingo.attempt.dto.*;
 import com.lingo.attempt.mapper.AttemptMapper;
 import com.lingo.attempt.model.Attempt;
 import com.lingo.attempt.model.AttemptSectionResult;
@@ -53,6 +50,30 @@ public class AttemptService {
 
     attempt = this.attemptRepository.save(attempt);
     return attempt.getAttemptId();
+  }
+
+
+  public ResAttemptDTO updateAttempt(ReqAttemptPut req) {
+    if (req == null || req.getAttemptId() == null) {
+      throw new EmptyException("Attempt ID is required");
+    }
+    Attempt existingAttempt = this.attemptRepository.findById(Long.valueOf(req.getAttemptId()))
+            .orElseThrow(() -> new NotFoundException(Constants.ATTEMPT_NOT_FOUND));
+    if (req.getUserId() != null) {
+      existingAttempt.setUserId(req.getUserId());
+    }
+    if (req.getScore() != null) {
+      existingAttempt.setScore(req.getScore());
+    }
+    if (req.getTimeTaken() != null) {
+      existingAttempt.setTimeTaken(req.getTimeTaken());
+    }
+    if (req.getType() != null) {
+      existingAttempt.setType(req.getType());
+    }
+    Attempt updatedAttempt = this.attemptRepository.save(existingAttempt);
+
+    return buildResponse(updatedAttempt, updatedAttempt.getUserAnswers(), updatedAttempt.getSectionResults());
   }
 
   public ResAttemptDTO getSingleAttempt(Long attemptId) {
@@ -290,8 +311,4 @@ public class AttemptService {
 
     return currentAttempt;
   }
-
-
-
-
 }

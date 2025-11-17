@@ -1,6 +1,7 @@
 package com.lingo.attempt.controller;
 
 import com.lingo.attempt.dto.ReqAttemptDTO;
+import com.lingo.attempt.dto.ReqAttemptPut;
 import com.lingo.attempt.dto.ResAttemptDTO;
 import com.lingo.attempt.dto.ResAttemptShortDTO;
 import com.lingo.attempt.service.AttemptService;
@@ -25,6 +26,13 @@ public class AttemptController {
   public ResponseEntity<Long> createAttempt(@RequestBody ReqAttemptDTO req){
     return ResponseEntity.ok(this.attemptService.createAttempt(req));
   }
+
+  @PutMapping
+  public ResponseEntity<ResAttemptDTO> updateAttempt(@RequestBody ReqAttemptPut request) {
+    ResAttemptDTO updatedAttempt = attemptService.updateAttempt(request);
+    return ResponseEntity.ok(updatedAttempt);
+  }
+
 
   @GetMapping("/full")
   public List<ResAttemptDTO> getUserAttempts(@RequestParam String userId){
