@@ -51,7 +51,7 @@
         </processorPath>
         <module name="notificationservice" />
       </profile>
-      <profile name="Annotation profile for fileservice" enabled="true">
+      <profile name="Annotation profile for chatbot" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
