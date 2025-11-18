@@ -12,11 +12,20 @@ const MainContent = React.memo(({ editMode, testTitle, testId }) => {
     const questionRefs = useRef({});
     const { questions } = useSelector((state) => state.questions);
     const { test } = useSelector((state) => state.test)
+
     const groupedArray = React.useMemo(() => {
         const groupedByPart = _.groupBy(questions, "part");
 
         return Object.entries(groupedByPart).map(([part, partQuestions]) => {
-            const groupedByResource = _.groupBy(partQuestions, "resourceContent");
+            // Modify resourceContent for null values before grouping
+            const questionsWithModifiedResource = partQuestions.map(q => ({
+                ...q,
+                resourceContent: q.resourceContent === null || q.resourceContent === 'null'
+                    ? `null-${q.questionNumber}`
+                    : q.resourceContent
+            }));
+
+            const groupedByResource = _.groupBy(questionsWithModifiedResource, "resourceContent");
 
             const resources = Object.entries(groupedByResource).map(
                 ([resourceContent, resourceQuestions]) => {
@@ -41,9 +50,9 @@ const MainContent = React.memo(({ editMode, testTitle, testId }) => {
 
 
     console.log("groupedArray", groupedArray[listQuestionNumber]);
+    console.log("grouped array", groupedArray)
 
     const questionCardComponents = React.useMemo(() =>
-
         groupedArray.map(({ part, resources }) => (
             <div key={part} className="mb-8">
 
@@ -58,11 +67,8 @@ const MainContent = React.memo(({ editMode, testTitle, testId }) => {
                 )}
 
                 {resources?.map(({ resourceContent, groupedByCommonTitle }, index) => (
-                    <>
-                        {/* {console.log("questions for index", index, groupedByCommonTitle[index])} */}
-                        {/* {console.log("common for index", index, _.flatMap(groupedByCommonTitle, "commonTitle"))} */}
+                    <React.Fragment key={`${part}-${index}`}>
                         <QuestionCard
-                            key={`${part}-${index}`}
                             questions={_.flatMap(groupedByCommonTitle, "questions")}
                             groupKey={part}
                             questionRefs={questionRefs}
@@ -73,8 +79,7 @@ const MainContent = React.memo(({ editMode, testTitle, testId }) => {
                             explanationResourceContent={groupedByCommonTitle?.[0].questions?.[0].explanationResourceContent}
                             commonTitle={_.flatMap(groupedByCommonTitle, "commonTitle")}
                         />
-                    </>
-
+                    </React.Fragment>
                 ))}
             </div>
         )),
@@ -90,7 +95,7 @@ const MainContent = React.memo(({ editMode, testTitle, testId }) => {
 
                 // find first question of the next/prev part
                 const currentPart = groupedArray[newIndex];
-                const firstQuestion = currentPart?.resources?.[0]?.questions?.[0];
+                const firstQuestion = currentPart?.resources?.[0]?.groupedByCommonTitle?.[0]?.questions?.[0];
                 if (firstQuestion) {
                     setActiveQuestion(firstQuestion.questionNumber);
                     setTimeout(() => {
@@ -109,15 +114,15 @@ const MainContent = React.memo(({ editMode, testTitle, testId }) => {
     const questionToGroupIndex = React.useMemo(() => {
         const map = {};
         groupedArray.forEach((group, groupIdx) => {
-            _.flatMap(group.resources?.[0].groupedByCommonTitle).forEach(({ questions }) => {
-                questions?.forEach((q) => {
+            group.resources?.forEach(resource => {
+                _.flatMap(resource.groupedByCommonTitle, 'questions').forEach((q) => {
                     map[q.questionNumber] = groupIdx;
                 });
             });
         });
         return map;
     }, [groupedArray]);
-    // console.log("audio for", listQuestionNumber, groupedArray[listQuestionNumber].resources[0].groupedByCommonTitle[0].questions[0].explanationResourceContent);
+
     return (
         <main className="flex min-h-screen flex-col lg:flex-row">
             <div className="flex-1 p-4 sm:p-6 overflow-y-auto">

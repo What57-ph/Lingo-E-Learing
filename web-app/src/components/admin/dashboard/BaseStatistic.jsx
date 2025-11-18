@@ -175,7 +175,7 @@ const BaseStatistic = ({ sampleData, type, label, topQuizzes }) => {
             </div>
 
 
-            {type === "attempt" && <TopQuizzes topQuizzes={topQuizzes} />}
+            {type === "attempt" && <TopQuizzes topQuizzes={topQuizzes?.slice(0, 5)} />}
         </div>
     );
 };

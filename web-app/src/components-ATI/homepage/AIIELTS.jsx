@@ -66,7 +66,7 @@ const PracticeModeModal = ({ isOpen, onClose }) => {
               Real exam simulation with limited time and no AI support.
             </p>
             <Link
-              to="/speaking"
+              to="/writing"
               className="w-full !bg-gray-800 hover:!bg-gray-900 !text-white font-semibold py-3 px-6 rounded-lg flex items-center justify-center gap-2 transition-colors cursor-pointer"
               onClick={onClose}
             >
@@ -97,7 +97,7 @@ const AIIELTS = () => {
           />
         </div>
         <h2 className="text-3xl md:text-5xl font-bold text-blue-950 mb-6">
-          AI-Powered IELTS Writing & Speaking Evaluation 
+          AI-Powered IELTS Writing & Speaking Evaluation
         </h2>
         <p className="text-lg md:text-xl text-gray-600 mb-10 max-w-3xl mx-auto">
           Instantly get feedback on Writing and Speaking skills. Our AI

@@ -6,6 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="7807224a-69f2-4995-954d-4271220bc1ae" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-app/src/components-ATI/homepage/AIIELTS.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/components-ATI/homepage/AIIELTS.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-app/src/components/admin/dashboard/BaseStatistic.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/components/admin/dashboard/BaseStatistic.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-app/src/components/admin/dashboard/TopQuizzes.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/components/admin/dashboard/TopQuizzes.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-app/src/pages-ATI/IeltsListListening.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/pages-ATI/IeltsListListening.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-app/src/pages-ATI/IeltsListReading.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/pages-ATI/IeltsListReading.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web-app/src/pages-ATI/IeltsListWriting.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/pages-ATI/IeltsListWriting.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,7 +127,7 @@
       <recent name="com.lingo.testservice.httpClient" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.TestserviceApplication">
+  <component name="RunManager" selected="Application.FileserviceApplication">
     <configuration name="ChatbotApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.lingo.chatbot.ChatbotApplication" />
       <module name="chatbot" />
@@ -189,9 +195,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.FileserviceApplication" />
         <item itemvalue="Application.TestserviceApplication" />
         <item itemvalue="Application.NotificationserviceApplication" />
-        <item itemvalue="Application.FileserviceApplication" />
         <item itemvalue="Application.CommentserviceApplication" />
         <item itemvalue="Application.ChatbotApplication" />
       </list>

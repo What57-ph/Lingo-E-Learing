@@ -11,7 +11,7 @@ const TopQuizzes = ({ topQuizzes }) => {
         { title: "ETS 2024 Test 4", type: "TOEIC", attempts: 93 },
         { title: "ETS 2024 Test 5", type: "TOEIC", attempts: 90 }
     ];
-
+    console.log("top", topQuizzes)
     return (
 
         <div className='bg-white p-6 shadow-xl rounded-xl w-full col-span-2'>

@@ -82,20 +82,22 @@ const CreateTestPage = () => {
         }
         if (typeUpload === "Part" && grouped["QUESTION_AUDIO"]) {
             const audioFiles = grouped["QUESTION_AUDIO"];
-
+            console.log("audio files", audioFiles)
             setQuestionSample(prevQuestions =>
                 prevQuestions.map(q => {
                     const matchedAudio = audioFiles.find(item => {
                         const part = item.mediaUrl
                             .split("/")
                             .pop()
-                            .match(/(?:PART|SECTION)[_ ]?(\d+)/i)?.[1];
+                            .match(/(?:PART|SECTION|RECORD)[_ ]?(\d+)/i)?.[1];
+
                         return (
                             parseInt(part, 10) ===
                             parseInt(q?.part?.replace(/\D/g, ""), 10)
                         );
                     });
-
+                    console.log("debug matched file", matchedAudio)
+                    // console.log("")
                     return matchedAudio
                         ? { ...q, explanationResourceContent: matchedAudio.mediaUrl }
                         : q;

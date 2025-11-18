@@ -166,7 +166,7 @@ function IeltsListListening() {
           <h1 className="text-3xl sm:text-4xl font-bold text-gray-800">
             Thư viện đề&nbsp;
             <span className="inline-block border-b-4 border-blue-400 pb-1">
-              IELTS Speaking
+              IELTS Listening
             </span>
             &nbsp;Academic
           </h1>

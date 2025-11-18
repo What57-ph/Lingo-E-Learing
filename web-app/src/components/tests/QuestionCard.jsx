@@ -135,10 +135,7 @@ const QuestionCard = ({ groupKey, questionRefs, resourceContent, editMode, quest
             img.src = resourceContent;
         }
     }, [questions]);
-    // console.log("user answers", userAnswers)
-    // console.log(questions)
-    // console.log("common title:", commonTitle)
-    // console.log("debug for form:", form.getFieldsValue())
+
     return (
         <>
             <Form
@@ -152,16 +149,18 @@ const QuestionCard = ({ groupKey, questionRefs, resourceContent, editMode, quest
                         commonTitle: q.commonTitle,
                         answers: q.answers?.map((a) => ({ content: a.content })),
                         correct:
-                            q.answers?.find((ans) => ans.correct === "true")
-                                ? String.fromCharCode(65 + q.answers.findIndex((ans) => ans.correct === "true"))
-                                : null,
+                            q.answers[0]?.content === null || q.answers[0]?.content === ''
+                                ? q.answers?.find((ans) => ans.correct === "true")?.content || ""
+                                : q.answers?.find((ans) => ans.correct === "true")
+                                    ? String.fromCharCode(65 + q.answers.findIndex((ans) => ans.correct === "true"))
+                                    : null,
                         explanation: q.explanation,
                     })),
                 }}
             >
 
 
-                <div className="flex gap-8 xl:flex-row flex-col">
+                <div className="flex gap-8 xl:flex-row flex-col !mb-4">
                     {/* Passage section */}
                     {editMode ? (
                         <div className="flex flex-col flex-[1.5]">
@@ -196,7 +195,7 @@ const QuestionCard = ({ groupKey, questionRefs, resourceContent, editMode, quest
                             className={
                                 checkType(resourceContent) === "null"
                                     ? "hidden"
-                                    : `bg-blue-50 rounded-lg p-6 mb-8 ml-4 flex flex-col  ${!editMode ? "flex-[1.5] max-h-[130vh] overflow-y-scroll" : "flex-1"}`
+                                    : `bg-blue-50 rounded-lg p-6 mb-8 ml-4 flex flex-col  ${!editMode ? "flex-[1.5] max-h-[130vh] overflow-y-auto" : "flex-1"}`
                             }
                         >
                             <div className="flex items-center mb-4">
@@ -218,12 +217,12 @@ const QuestionCard = ({ groupKey, questionRefs, resourceContent, editMode, quest
                     )}
 
                     {/* Questions section */}
-                    <div className={`${!editMode ? "flex-[1] max-h-[130vh] overflow-y-scroll" : "flex-1"}`}>
+                    <div className={`${!editMode ? "flex-[1] max-h-[130vh] overflow-y-auto" : "flex-1"}`}>
 
 
                         {questions.map((q, qId) => {
                             const shouldRenderTitle = qId === 0 || q.commonTitle !== questions[qId - 1].commonTitle;
-
+                            const isTextAnswer = q.answers[0]?.content === null || q.answers[0]?.content === '';
 
                             return (
                                 <div key={qId} className="">
@@ -280,52 +279,57 @@ const QuestionCard = ({ groupKey, questionRefs, resourceContent, editMode, quest
 
                                                 {editMode ? (
                                                     <>
-                                                        {q.answers?.map((ans, aId) => (
+                                                        {/* Check if answers are null/empty - show text field instead of radio */}
+                                                        {isTextAnswer ? (
                                                             <Form.Item
-                                                                key={ans.id}
-                                                                name={["questions", qId, "answers", aId, "content"]}
-                                                                label={`Answer ${aId + 1}`}
+                                                                name={["questions", qId, "correct"]}
+                                                                label="Correct Answer (Text)"
                                                             >
-                                                                <Input />
+                                                                <Input placeholder="Enter the correct answer" />
                                                             </Form.Item>
-                                                        ))}
-
-                                                        <Form.Item
-                                                            name={["questions", qId, "correct"]}
-                                                            label="Correct Answer"
-                                                            initialValue={
-                                                                q.answers?.find((ans) => ans.correct === "true")
-                                                                    ? String.fromCharCode(
-                                                                        65 + q.answers.findIndex((ans) => ans.correct === "true")
-                                                                    )
-                                                                    : null
-                                                            }
-                                                        >
-                                                            <Radio.Group>
+                                                        ) : (
+                                                            <>
                                                                 {q.answers?.map((ans, aId) => (
-                                                                    <Radio key={ans.id} value={String.fromCharCode(65 + aId)}>
-                                                                        Answer {aId + 1}
-                                                                    </Radio>
+                                                                    <Form.Item
+                                                                        key={ans.id}
+                                                                        name={["questions", qId, "answers", aId, "content"]}
+                                                                        label={`Answer ${aId + 1}`}
+                                                                    >
+                                                                        <Input />
+                                                                    </Form.Item>
                                                                 ))}
-                                                            </Radio.Group>
-                                                        </Form.Item>
-                                                    </>
-                                                ) : test?.type === "IELTS" && (q.answers[0].content === null || q.answers[0].content === '') ? (
-                                                    <>
-                                                        {/* {console.log(q)} */}
-                                                        {/* {q.title && (<p>{q.title}</p>)} */}
 
-                                                        <Input.TextArea className="!h-10 !w-1/2" rows={1} key={q.id} onChange={
-                                                            (e) => handleAnswerChange(
+                                                                <Form.Item
+                                                                    name={["questions", qId, "correct"]}
+                                                                    label="Correct Answer"
+                                                                >
+                                                                    <Radio.Group>
+                                                                        {q.answers?.map((ans, aId) => (
+                                                                            <Radio key={ans.id} value={String.fromCharCode(65 + aId)}>
+                                                                                Answer {aId + 1}
+                                                                            </Radio>
+                                                                        ))}
+                                                                    </Radio.Group>
+                                                                </Form.Item>
+                                                            </>
+                                                        )}
+                                                    </>
+                                                ) : test?.type === "IELTS" && isTextAnswer ? (
+                                                    <>
+                                                        <Input.TextArea
+                                                            className="!h-10 !w-1/2"
+                                                            rows={1}
+                                                            key={q.id}
+                                                            onChange={(e) => handleAnswerChange(
                                                                 q.id,
                                                                 e.target.value,
                                                                 q.answers.find((a) => a.id === e.target.value)?.correct,
                                                                 q.title,
                                                                 q.answers.find((a) => a.id === e.target.value)?.content,
-                                                                q.questionNumber)} />
+                                                                q.questionNumber
+                                                            )}
+                                                        />
                                                     </>
-
-
                                                 ) : (
                                                     <Radio.Group
                                                         onChange={(e) =>
@@ -370,7 +374,6 @@ const QuestionCard = ({ groupKey, questionRefs, resourceContent, editMode, quest
                                                 <Form.Item
                                                     name={["questions", qId, "explanation"]}
                                                     label="Giải thích"
-                                                    // initialValue={q.explanation}
                                                     valuePropName="value"
                                                     getValueFromEvent={(value) => value}
                                                 >
