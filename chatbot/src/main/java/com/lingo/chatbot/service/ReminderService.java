@@ -1,9 +1,7 @@
 package com.lingo.chatbot.service;
 
 import com.lingo.chatbot.httpClient.TestClient;
-import com.lingo.chatbot.model.ReqBroadcast;
 import lombok.AccessLevel;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.ai.tool.annotation.Tool;

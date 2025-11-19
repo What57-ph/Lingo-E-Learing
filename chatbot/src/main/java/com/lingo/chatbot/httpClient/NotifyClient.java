@@ -1,7 +1,7 @@
 package com.lingo.chatbot.httpClient;
 
 
-import com.lingo.chatbot.model.ReqBroadcast;
+import com.lingo.chatbot.model.ReqBroadCast;
 import com.lingo.common_library.dto.ReqNotificationPost;
 import com.lingo.common_library.dto.ResNotification;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -20,5 +20,5 @@ public interface NotifyClient {
     @PostMapping("/broadcast")
     public ResponseEntity<String> broadcastNotification(
             @Parameter(description = "Broadcast notification request", required = true)
-            @RequestBody ReqBroadcast req);
+            @RequestBody ReqBroadCast req);
 }
