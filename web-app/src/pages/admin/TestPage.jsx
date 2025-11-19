@@ -39,7 +39,6 @@ const TestPage = () => {
     };
 
     const handleNavigateToTest = (record) => {
-        // Format the test name for URL (replace spaces with hyphens, lowercase)
         const formattedName = record.title?.replace(/\s+/g, '-').toLowerCase() || 'test';
         navigate(`/tests/${record.id}/${formattedName}`);
     };
