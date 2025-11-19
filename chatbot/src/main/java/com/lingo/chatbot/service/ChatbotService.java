@@ -27,6 +27,8 @@ public class ChatbotService {
     final JdbcChatMemoryRepository jdbcChatMemoryRepository;
     final ChatMemory chatMemory;
     final NotifyClient notifyClient;
+    final InstructionService instructionService;
+//    final RagService ragService;
 //    final JdbcTemplate jdbcTemplate;
 String systemPrompt = """
 You are the official AI assistant of an English-learning platform specializing in TOEIC and IELTS preparation.
@@ -36,14 +38,19 @@ You do not mention anything related to coding, system architecture, or technical
 helpful study guidance, and accurate information about the platform’s services. When users request practice, you can create authentic TOEIC or IELTS 
 exercises for any skill. When evaluating their responses, you always provide an estimated score or band with reasoning, corrections when applicable, a brief explanation of mistakes,
 and practical improvement tips. Your communication style is concise, friendly, and easy to understand, responding in short paragraphs with direct value. At the end of replies, 
-you may ask a short clarifying question only when more context is needed.
+you may ask a short clarifying question only when more context is needed. If user ask something related to private information of
+system, answer if user has role admin, otherwise, return message that they do not have permission to get information.
 """;
 
 
-    public ChatbotService(ChatClient.Builder chatClient, JdbcChatMemoryRepository jdbcChatMemoryRepository, ChatMemory chatMemoryInit, NotifyClient notifyClient) {
+    public ChatbotService(ChatClient.Builder chatClient, JdbcChatMemoryRepository jdbcChatMemoryRepository,
+                          ChatMemory chatMemoryInit, NotifyClient notifyClient, InstructionService instructionService
+//                          RagService ragService
+    ) {
         this.chatMemory=chatMemoryInit;
         this.jdbcChatMemoryRepository = jdbcChatMemoryRepository;
         this.notifyClient=notifyClient;
+//        this.ragService=ragService;
 //        this.jdbcTemplate= jdbcTemplate;
 
 //        ChatMemoryRepository chatMemoryRepository = JdbcChatMemoryRepository.builder()
@@ -65,13 +72,17 @@ you may ask a short clarifying question only when more context is needed.
     public String chat(ChatRequest request){
         String conversationId = request.getUserId();
 
-        SystemMessage systemMessage= new SystemMessage(this.systemPrompt);
+        String instructions = this.instructionService.getInstructions();
+        String finalPrompt= this.systemPrompt +
+                "\n\n Instruction from system documents (use when get relevant request)" +
+        instructions;
+        SystemMessage systemMessage= new SystemMessage(finalPrompt);
         UserMessage userMessage = new UserMessage(request.getMessage());
         Prompt prompt = new Prompt(systemMessage, userMessage);
 
         return chatClient
                 .prompt(prompt)
-                .tools(new ApplicationProvidedService(notifyClient))
+                .tools(new BotNotificationService(notifyClient))
                 .advisors(advisorSpec -> advisorSpec.param(
                         ChatMemory.CONVERSATION_ID, conversationId
                 ))
@@ -84,6 +95,10 @@ you may ask a short clarifying question only when more context is needed.
                 .mimeType(MimeTypeUtils.parseMimeType(file.getContentType()))
                 .data(file.getResource())
                 .build();
+        String instructions = this.instructionService.getInstructions();
+        String finalPrompt= this.systemPrompt +
+                "\n\n Instruction from system documents (use when get relevant request)" +
+                instructions;
         ChatOptions chatOptions = ChatOptions.builder()
                 .temperature(0D)
                 .build();
@@ -93,7 +108,7 @@ you may ask a short clarifying question only when more context is needed.
                         ChatMemory.CONVERSATION_ID, String.valueOf(userId)
                         )
                 )
-                .system(this.systemPrompt)
+                .system(finalPrompt)
                 .user(promptUserSpec ->
                         promptUserSpec
                                 .media(media)

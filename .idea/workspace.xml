@@ -5,10 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7807224a-69f2-4995-954d-4271220bc1ae" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/chatbot/src/main/java/com/lingo/chatbot/NotificationType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chatbot/src/main/java/com/lingo/chatbot/config/EmbeddingConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chatbot/src/main/java/com/lingo/chatbot/config/RagConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chatbot/src/main/java/com/lingo/chatbot/service/RagDocumentLoader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chatbot/src/main/java/com/lingo/chatbot/service/RagService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chatbot/src/main/resources/instructions/notification-guide.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fileservice/src/main/java/com/lingo/fileservice/service/FileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/fileservice/src/main/java/com/lingo/fileservice/service/FileService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testservice/src/main/java/com/lingo/testservice/repository/MediaResourceRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/testservice/src/main/java/com/lingo/testservice/repository/MediaResourceRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatbot/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/chatbot/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatbot/src/main/java/com/lingo/chatbot/service/ApplicationProvidedService.java" beforeDir="false" afterPath="$PROJECT_DIR$/chatbot/src/main/java/com/lingo/chatbot/service/BotNotificationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatbot/src/main/java/com/lingo/chatbot/service/ChatbotService.java" beforeDir="false" afterPath="$PROJECT_DIR$/chatbot/src/main/java/com/lingo/chatbot/service/ChatbotService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatbot/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/chatbot/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-library/src/main/java/com/lingo/common_library/dto/ReqNotificationPost.java" beforeDir="false" afterPath="$PROJECT_DIR$/common-library/src/main/java/com/lingo/common_library/dto/ReqNotificationPost.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/testservice/src/main/java/com/lingo/testservice/service/QuestionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/testservice/src/main/java/com/lingo/testservice/service/QuestionService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -19,8 +29,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Enum" />
         <option value="Interface" />
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
@@ -47,6 +57,10 @@
             <RecentBranchesForRepo>
               <option name="branches">
                 <list>
+                  <RecentBranch>
+                    <option name="branchName" value="chatbotUpdate" />
+                    <option name="lastUsedInstant" value="1763513843" />
+                  </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="main" />
                     <option name="lastUsedInstant" value="1763469990" />
@@ -100,10 +114,11 @@
     "Application.FileserviceApplication.executor": "Run",
     "Application.NotificationserviceApplication.executor": "Run",
     "Application.TestserviceApplication.executor": "Run",
+    "Maven.chatbot [package].executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "chatbotUpdate",
     "last_opened_file_path": "C:/Project/Lingo/fileservice/src/main/resources/keys",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
@@ -116,7 +131,7 @@
       <recent name="C:\Project\Lingo\fileservice\src\main\resources\keys" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.ChatbotApplication">
+  <component name="RunManager" selected="Application.TestserviceApplication">
     <configuration name="AccountApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.lingo.account.AccountApplication" />
       <module name="account" />
@@ -130,12 +145,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ChatbotApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.lingo.chatbot.ChatbotApplication" />
-      <module name="chatbot" />
+    <configuration name="AttemptApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.lingo.attempt.AttemptApplication" />
+      <module name="attempt" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.lingo.chatbot.*" />
+          <option name="PATTERN" value="com.lingo.attempt.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -169,19 +184,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="NotificationserviceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.lingo.notificationservice.NotificationserviceApplication" />
-      <module name="notificationservice" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.lingo.notificationservice.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="TestserviceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.lingo.testservice.TestserviceApplication" />
       <module name="testservice" />
@@ -197,11 +199,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.FileserviceApplication" />
-        <item itemvalue="Application.ChatbotApplication" />
-        <item itemvalue="Application.NotificationserviceApplication" />
-        <item itemvalue="Application.CommentserviceApplication" />
+        <item itemvalue="Application.TestserviceApplication" />
+        <item itemvalue="Application.AttemptApplication" />
         <item itemvalue="Application.AccountApplication" />
+        <item itemvalue="Application.FileserviceApplication" />
+        <item itemvalue="Application.CommentserviceApplication" />
       </list>
     </recent_temporary>
   </component>
