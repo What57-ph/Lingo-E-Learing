@@ -2,7 +2,7 @@ package com.lingo.chatbot.service;
 
 import com.lingo.chatbot.httpClient.NotifyClient;
 import com.lingo.chatbot.model.NotifyRequest;
-import com.lingo.chatbot.model.ReqBroadcast;
+import com.lingo.chatbot.model.ReqBroadCast;
 import com.lingo.common_library.dto.ReqNotificationPost;
 import com.lingo.common_library.dto.ResNotification;
 
@@ -29,17 +29,12 @@ public class BotNotificationService {
             Just provide notificationTypeId, typeName, title, message, and optional url.
         """
     )
-    public ResNotification notifyUserByChatbot(NotifyRequest request) {
+    public ResNotification notifyUserByChatbot(ReqNotificationPost request) {
 
-        ReqNotificationPost req = new ReqNotificationPost();
-        req.setUserId(userId); // <-- never ask, always auto-filled
-        req.setNotificationTypeId(request.getNotificationTypeId());
-        req.setTitle(request.getTitle());
-        req.setMessage(request.getMessage());
-        req.setUrl(request.getUrl());
-        req.setTypeName(request.getTypeName());
+        request.setUserId(userId);
 
-        return notifyClient.createNotification(req).getBody();
+
+        return notifyClient.createNotification(request).getBody();
     }
 
     @Tool(
@@ -51,7 +46,7 @@ public class BotNotificationService {
         is already in the system prompt.
     """
     )
-    public String notifyAllUser(ReqBroadcast reqBroadcast) {
+    public String notifyAllUser(ReqBroadCast reqBroadcast) {
         return notifyClient.broadcastNotification(reqBroadcast).getBody();
     }
 }
