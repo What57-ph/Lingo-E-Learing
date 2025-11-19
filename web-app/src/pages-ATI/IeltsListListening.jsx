@@ -171,7 +171,7 @@ function IeltsListListening() {
             &nbsp;Academic
           </h1>
           <p className="text-gray-600 mt-2">
-            Kho đề IELTS Speaking Academic từ Cambridge và bộ đề thi thật
+            Kho đề IELTS Listening Academic từ Cambridge và bộ đề thi thật
             (Actual Tests).
           </p>
         </header>

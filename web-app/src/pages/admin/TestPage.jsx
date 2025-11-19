@@ -19,30 +19,26 @@ const TestPage = () => {
     const navigate = useNavigate();
     const { tests } = useSelector(state => state.tests);
 
+    // Extract the reload function so it can be reused
+    const reloadTests = () => {
+        dispatch(retrieveAllTests("page=0&size=10"));
+    };
+
     useEffect(() => {
-        const getAllTests = async (params) => {
-            dispatch(retrieveAllTests(params));
-        }
-        getAllTests("page=0&size=10");
+        reloadTests();
     }, [dispatch]);
 
     const handleDeleteTest = async (id) => {
         try {
             await dispatch(removeTest(id)).unwrap();
-
-            // Show success message
             messageApi.success('Test deleted successfully!');
-
-            // Reload the table
-            dispatch(retrieveAllTests("page=0&size=10"));
+            reloadTests();
         } catch (error) {
-            // Show error message
             messageApi.error(error?.message || 'Failed to delete test. Please try again.');
         }
     };
 
     const handleNavigateToTest = (record) => {
-        // Format the test name for URL (replace spaces with hyphens, lowercase)
         const formattedName = record.title?.replace(/\s+/g, '-').toLowerCase() || 'test';
         navigate(`/tests/${record.id}/${formattedName}`);
     };
@@ -217,6 +213,7 @@ const TestPage = () => {
                 setOpen={setOpen}
                 record={selectedRecord}
                 onNavigateToTest={handleNavigateToTest}
+                onSuccess={reloadTests}
             />
         </>
     );
