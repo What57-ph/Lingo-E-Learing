@@ -30,7 +30,7 @@ This document guides the chatbot to create notifications based on user requests.
     - `notificationTypeId`: integer ID corresponding to the name in the JSON
     - `title`: short title for the notification
     - `content`: detailed message
-
+4. **Don't ask user userId**
 ---
 
 ## Example Scenarios
