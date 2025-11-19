@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { createAccount, enableAccount, getAccount, getAccountByUsername, getAllAccounts, handleApiError, removeAccount, updateAccount, updateAvatar } from "../config/api";
+import { createAccount, enableAccount, getAccount, getAccountByEmail, getAccountByUsername, getAllAccounts, handleApiError, removeAccount, updateAccount, updateAvatar } from "../config/api";
 import { toast } from "react-toastify";
 
 const initialState = {
@@ -36,6 +36,20 @@ export const retrieveAccountByUsername = createAsyncThunk(
   async (username, { rejectWithValue }) => {
     try {
       const res = await getAccountByUsername(username);
+      return res;
+    } catch (err) {
+      if (err.response && err.response.data) {
+        return rejectWithValue(err.response.data);
+      }
+      return rejectWithValue("Lỗi không xác định");
+    }
+  }
+);
+export const retrieveAccountByEmail = createAsyncThunk(
+  "accounts/retrieveByEmail",
+  async (email, { rejectWithValue }) => {
+    try {
+      const res = await getAccountByEmail(email);
       return res;
     } catch (err) {
       if (err.response && err.response.data) {
@@ -142,6 +156,18 @@ const accountSlice = createSlice({
         state.error = null;
       })
       .addCase(retrieveAccountByUsername.rejected, (state, action) => {
+        state.error = action.payload;
+        state.loading = false;
+      })
+      .addCase(retrieveAccountByEmail.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(retrieveAccountByEmail.fulfilled, (state, action) => {
+        state.currentUser = action.payload;
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(retrieveAccountByEmail.rejected, (state, action) => {
         state.error = action.payload;
         state.loading = false;
       })

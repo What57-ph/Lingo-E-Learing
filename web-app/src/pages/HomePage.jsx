@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import AuthContext from '../contexts/AuthContext';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginGoogle } from '../slice/authentication';
 import { toast } from 'react-toastify';
 import Hero from '../components-ATI/homepage/Hero';

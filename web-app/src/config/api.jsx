@@ -127,6 +127,9 @@ export const updateAccount = (userData) =>
 export const getAccountByUsername = (username) => {
   return publicInstance.get(`api/v1/account/getByUsername/${username}`);
 };
+export const getAccountByEmail = (email) => {
+  return publicInstance.get(`api/v1/account/getByEmail/${email}`);
+};
 
 export const removeAccount = (accountId) => {
   return publicInstance.delete(`api/v1/account/${accountId}`);

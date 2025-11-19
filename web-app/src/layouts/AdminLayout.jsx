@@ -9,6 +9,8 @@ import SideAdmin from "../components/admin/SideAdmin";
 import DynamicBreadcrumb from "../components/admin/DynamicBreadcrumb";
 // THÊM: Import menu content
 import SiderMenuContent from "../components/admin/SiderMenuContent";
+import Chatbot from "../components-ATI/ai-tools/Chatbot";
+import { ChatbotProvider } from "../contexts/ChatbotContext";
 
 const { Content } = Layout;
 const { useBreakpoint } = Grid; // Hook để detect màn hình
@@ -43,69 +45,73 @@ export default function AdminLayout() {
     };
 
     return (
-        <Layout
-            style={{
-                minHeight: "100vh",
-                backgroundColor: '#fcfcfc' //
-            }}
-        >
-
-            {/* SIDER (DESKTOP): Chỉ hiển thị trên màn hình md trở lên */}
-            {isDesktop && (
-                <SideAdmin
-                    collapsed={collapsed}
-                    width={SIDER_WIDTH}
-                    collapsedWidth={SIDER_WIDTH_COLLAPSED}
-                />
-            )}
-
-            {/* DRAWER (MOBILE): Chỉ hiển thị dưới màn hình md */}
-            {!isDesktop && (
-                <Drawer
-                    placement="left"
-                    onClose={closeDrawer}
-                    open={drawerVisible}
-                    closable={false}
-
-                    styles={{ padding: 0 }} // Reset padding để menu vừa khít
-
-                    width={SIDER_WIDTH}
-                    zIndex={1002} // Đảm bảo Drawer đè lên Header
-                >
-                    {/* Tái sử dụng Menu Content, luôn ở trạng thái "không thu gọn" */}
-                    <SiderMenuContent collapsed={false} onMenuClick={closeDrawer} />
-                </Drawer>
-            )}
-
-            {/* MAIN LAYOUT (Header + Content) */}
+        <ChatbotProvider>
             <Layout
-                className="transition-all duration-300"
                 style={{
-                    marginLeft: contentMarginLeft, // Áp dụng margin
-                    backgroundColor: 'transparent'
+                    minHeight: "100vh",
+                    backgroundColor: '#fcfcfc' //
                 }}
             >
 
-                <HeaderAdmin
-                    isDesktop={isDesktop} // Prop mới
-                    collapsed={collapsed}
-                    onToggle={handleToggle} // Prop mới
-                    height={HEADER_HEIGHT}
-                    siderWidth={SIDER_WIDTH}
-                    siderCollapsedWidth={SIDER_WIDTH_COLLAPSED}
-                />
+                {/* SIDER (DESKTOP): Chỉ hiển thị trên màn hình md trở lên */}
+                {isDesktop && (
+                    <SideAdmin
+                        collapsed={collapsed}
+                        width={SIDER_WIDTH}
+                        collapsedWidth={SIDER_WIDTH_COLLAPSED}
+                    />
+                )}
 
-                <Content
-                    className="p-8 bg-transparent" //
+                {/* DRAWER (MOBILE): Chỉ hiển thị dưới màn hình md */}
+                {!isDesktop && (
+                    <Drawer
+                        placement="left"
+                        onClose={closeDrawer}
+                        open={drawerVisible}
+                        closable={false}
+
+                        styles={{ padding: 0 }} // Reset padding để menu vừa khít
+
+                        width={SIDER_WIDTH}
+                        zIndex={1002} // Đảm bảo Drawer đè lên Header
+                    >
+                        {/* Tái sử dụng Menu Content, luôn ở trạng thái "không thu gọn" */}
+                        <SiderMenuContent collapsed={false} onMenuClick={closeDrawer} />
+                    </Drawer>
+                )}
+
+                {/* MAIN LAYOUT (Header + Content) */}
+                <Layout
+                    className="transition-all duration-300"
                     style={{
-                        marginTop: HEADER_HEIGHT,
-                        minHeight: `calc(100vh - ${HEADER_HEIGHT}px)`,
+                        marginLeft: contentMarginLeft, // Áp dụng margin
+                        backgroundColor: 'transparent'
                     }}
                 >
-                    <DynamicBreadcrumb />
-                    <Outlet />
-                </Content>
+
+                    <HeaderAdmin
+                        isDesktop={isDesktop} // Prop mới
+                        collapsed={collapsed}
+                        onToggle={handleToggle} // Prop mới
+                        height={HEADER_HEIGHT}
+                        siderWidth={SIDER_WIDTH}
+                        siderCollapsedWidth={SIDER_WIDTH_COLLAPSED}
+                    />
+
+                    <Content
+                        className="p-8 bg-transparent" //
+                        style={{
+                            marginTop: HEADER_HEIGHT,
+                            minHeight: `calc(100vh - ${HEADER_HEIGHT}px)`,
+                        }}
+                    >
+                        <DynamicBreadcrumb />
+                        <Outlet />
+                    </Content>
+                </Layout>
+                <Chatbot />
             </Layout>
-        </Layout>
+        </ChatbotProvider>
+
     );
 }

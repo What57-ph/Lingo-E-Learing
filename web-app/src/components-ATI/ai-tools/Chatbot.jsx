@@ -5,6 +5,7 @@ import { askAI, askAIWithFile } from "../../slice/chat";
 import { v4 as uuidv4 } from 'uuid';
 import chatbotImg from "../images/Lingo.png";
 import { useChatbot } from "../../contexts/ChatbotContext";
+import { retrieveAccountByEmail } from "../../slice/accounts";
 
 const ChatMessage = ({ role, content }) => {
   const isUser = role === "user";
@@ -41,16 +42,21 @@ export default function Chatbot() {
 
   const dispatch = useDispatch();
   const { messageResponse, loading, error } = useSelector((state) => state.chat);
-
-  const userId = useSelector((state) => state.authentication?.user?.id);
+  const { currentUser } = useSelector((state) => state.accounts)
+  const { user } = useSelector((state) => state.authentication)
   const [conversationId, setConversationId] = useState("");
 
   useEffect(() => {
-    if (userId) {
-      setConversationId(userId)
+    dispatch(retrieveAccountByEmail(user?.email))
+  }, [])
+
+  useEffect(() => {
+    if (currentUser) {
+      setConversationId(currentUser?.keycloakId)
+    } else {
+      setConversationId(uuidv4())
     }
-    setConversationId(uuidv4())
-  }, []);
+  }, [currentUser]);
 
   console.log("conversationId", conversationId)
 
@@ -89,10 +95,19 @@ export default function Chatbot() {
 
   useEffect(() => {
     if (error) {
+      // Kiểm tra lỗi 429 (Too Many Requests)
+      let errorContent = "Xin lỗi, đã xảy ra lỗi. Vui lòng thử lại sau.";
+
+      if (error.status === 429 || error.message?.includes("429") || error.message?.includes("rate limit")) {
+        errorContent = "Một vài lỗi xảy ra, hãy thử lại!";
+      } else if (error.message) {
+        errorContent = `Xin lỗi, có lỗi xảy ra: ${error.message}`;
+      }
+
       const errorMessage = {
         id: Date.now(),
         type: "bot",
-        content: `Sorry, I encountered an error: ${error.message || "Please try again later."}`,
+        content: errorContent,
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, errorMessage]);
@@ -152,7 +167,6 @@ export default function Chatbot() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          // Thêm cursor-pointer
           className="text-white w-16 h-16 rounded-full shadow-2xl flex items-center justify-center group relative transition-all duration-300 hover:scale-110 cursor-pointer"
           aria-label="Open AI Chatbot"
         >
@@ -160,10 +174,10 @@ export default function Chatbot() {
         </button>
       )}
 
-      {/* Expanded Chat Window */}
+      {/* Expanded Chat Window - Tăng kích thước */}
       {isOpen && (
         <div
-          className="w-96 h-[400px] bg-white rounded-2xl shadow-2xl flex flex-col border border-gray-200"
+          className="w-[450px] h-[550px] bg-white rounded-2xl shadow-2xl flex flex-col border border-gray-200"
           style={{
             background: 'linear-gradient(135deg, #1e40af 0%, #172554 100%)'
           }}
@@ -180,7 +194,6 @@ export default function Chatbot() {
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              // Thêm cursor-pointer
               className="text-gray-300 hover:text-white hover:bg-white/20 rounded-full p-2 cursor-pointer"
               aria-label="Close chat"
             >
@@ -231,7 +244,6 @@ export default function Chatbot() {
                 <span className="text-sm text-blue-700 flex-1 truncate">{attachedFile.name}</span>
                 <button
                   onClick={handleRemoveFile}
-                  // Thêm cursor-pointer
                   className="text-blue-600 hover:text-blue-800 cursor-pointer"
                   title="Remove file"
                 >
@@ -251,7 +263,6 @@ export default function Chatbot() {
               />
               <button
                 onClick={() => fileInputRef.current?.click()}
-                // Thêm cursor-pointer
                 className="text-gray-400 hover:text-blue-600 p-2 rounded-full absolute left-2 top-1/2 -translate-y-1/2 cursor-pointer"
                 title="Upload file"
                 disabled={loading}
@@ -279,7 +290,6 @@ export default function Chatbot() {
               <button
                 onClick={handleSendMessage}
                 disabled={(!inputValue.trim() && !attachedFile) || loading}
-                // Thêm cursor-pointer
                 className="absolute right-2 top-1/2 -translate-y-1/2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white w-9 h-9 rounded-full flex items-center justify-center ml-1 cursor-pointer"
               >
                 <Send size={18} />
