@@ -8,11 +8,11 @@ const AuthHeader = () => {
 
   const content = {
     "/auth/login": {
-      label: 'Đăng nhập Preps Ielts',
+      label: 'Đăng nhập Lingo',
       welcome: 'Chào mừng bạn trở lại!'
     },
     "/auth/register": {
-      label: 'Đăng ký Preps Ielts',
+      label: 'Đăng ký Lingo',
     },
     "/auth/forget": {
       label: 'Đặt lại mật khẩu',

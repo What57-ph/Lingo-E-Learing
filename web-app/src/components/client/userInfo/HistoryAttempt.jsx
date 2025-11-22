@@ -123,7 +123,7 @@ const columns = [
       <Space size="middle">
         <Link
           to={
-            record.sectionResults[0].type === "Listening" || record.sectionResults[0].type === "Reading"
+            record.sectionResults[0].type === "LISTENING" || record.sectionResults[0].type === "READING"
               ? `/tests/${record.quizId}/${record.testTitle}/results/${record.attemptId}`
               : record.sectionResults[0].type === "Writing"
                 ? `/tests/writing/${record.quizId}/${record.testTitle}/results/${record.attemptId}`
@@ -136,7 +136,7 @@ const columns = [
 
         <Link
           to={
-            record.type === "Listening" || record.type === "Reading"
+            record.type === "LISTENING" || record.type === "READING"
               ? `/tests/${record.quizId}/${record.testTitle}`
               : record.type === "Writing"
                 ? `/tests/speaking`

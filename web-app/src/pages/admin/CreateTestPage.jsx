@@ -187,7 +187,7 @@ const CreateTestPage = () => {
                                     <Option value="LISTENING">Listening</Option>
                                     <Option value="READING">Reading</Option>
                                     <Option value="SPEAKING">Speaking</Option>
-                                    <Option value="Writing">Writing</Option>
+                                    <Option value="WRITING">Writing</Option>
                                 </Select>
                             </Form.Item>
                         </div>
