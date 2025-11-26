@@ -64,6 +64,20 @@ Lingo is a comprehensive web application built on a **microservices architecture
 ---
 
 ### 5. Installation & Setup
+FileService Setup Note
+
+This service interacts with Google Cloud. For security purposes, access credentials are required via a JSON key file.
+
+Setup
+
+Download Google Cloud Key
+Download the JSON file from the following Google Drive folder: https://drive.google.com/drive/folders/12qu_I4HqqB8p-u7c_sSPUGLrQ1SbCxpA
+
+Place the Key File
+Copy the JSON file to the following folder in the fileservice service (create folder keys if not existed):
+```bash
+fileservice/src/main/resources/keys
+```
 
 ```bash
 git clone https://github.com/ducsieunhan/lingo.git
