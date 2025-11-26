@@ -44,7 +44,7 @@ public class AttemptService {
     Attempt attempt = buildAttempt(req);
 
     List<String> field = Arrays.asList(req.getField());
-    if(field.contains("Listening") || field.contains("Reading") ) {
+    if(field.contains("LISTENING") || field.contains("READING") ) {
       attempt = gradingLR(attempt, req);
     } else {
       attempt = gradingSW(attempt, req);
