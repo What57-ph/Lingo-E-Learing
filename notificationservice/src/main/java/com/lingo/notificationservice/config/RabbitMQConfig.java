@@ -53,17 +53,17 @@ public class RabbitMQConfig {
   Binding newBroadcastQueueBinding(){
     return BindingBuilder.bind(newBroadcastQueue()).to(exchange()).with(properties.newBroadcastNotificationQueue());
   }
-
-  @Bean
-  public ConnectionFactory connectionFactory() {
-    CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
-    connectionFactory.setHost("localhost");
-    connectionFactory.setPort(5672);
-    connectionFactory.setUsername("admin");
-    connectionFactory.setPassword("123456");
-    connectionFactory.setVirtualHost("/");
-    return connectionFactory;
-  }
+//
+//  @Bean
+//  public ConnectionFactory connectionFactory() {
+//    CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
+//    connectionFactory.setHost("localhost");
+//    connectionFactory.setPort(5672);
+//    connectionFactory.setUsername("admin");
+//    connectionFactory.setPassword("123456");
+//    connectionFactory.setVirtualHost("/");
+//    return connectionFactory;
+//  }
 
   @Bean
   public MessageConverter jsonMessageConverter(ObjectMapper objectMapper) {
@@ -71,7 +71,7 @@ public class RabbitMQConfig {
   }
 
   @Bean
-  RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
+    RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
     RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
     rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
     return rabbitTemplate;
