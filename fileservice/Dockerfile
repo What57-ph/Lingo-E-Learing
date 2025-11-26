@@ -4,15 +4,14 @@ WORKDIR /app
 COPY ./common-library ./common-library
 RUN mvn -f ./common-library/pom.xml clean install -DskipTests
 
-
 COPY ./fileservice ./fileservice
 RUN mvn -f ./fileservice/pom.xml clean package -DskipTests
-
 
 FROM eclipse-temurin:17-jre-jammy
 WORKDIR /app
 
 COPY --from=build /app/fileservice/target/*.jar fileservice.jar
+COPY ./.env /app/.env
 
 EXPOSE 9004
 ENTRYPOINT ["java", "-jar", "fileservice.jar"]

@@ -66,8 +66,8 @@ class FileServiceImpl implements FileService {
         String bucketName;
         // @Value("${gcp.storage.object-id}")
         // String objectName;
-        @Value("${spring.cloud.gcp.credentials.location}")
-        String credentialFilePath;
+//        @Value("${spring.cloud.gcp.credentials.location}")
+//        String credentialFilePath;
 
         final MediaResourceClient mediaResourceClient;
         final QuestionClient questionClient;

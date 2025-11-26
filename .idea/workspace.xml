@@ -5,12 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7807224a-69f2-4995-954d-4271220bc1ae" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/testservice/src/main/java/com/lingo/testservice/model/dto/ReqBroadCast.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-library/src/main/java/com/lingo/common_library/dto/ReqNotificationPost.java" beforeDir="false" afterPath="$PROJECT_DIR$/common-library/src/main/java/com/lingo/common_library/dto/ReqNotificationPost.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testservice/src/main/java/com/lingo/testservice/httpClient/NotifyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/testservice/src/main/java/com/lingo/testservice/httpClient/NotifyClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testservice/src/main/java/com/lingo/testservice/model/dto/request/test/ReqTestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/testservice/src/main/java/com/lingo/testservice/model/dto/request/test/ReqTestDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/testservice/src/main/java/com/lingo/testservice/service/TestService.java" beforeDir="false" afterPath="$PROJECT_DIR$/testservice/src/main/java/com/lingo/testservice/service/TestService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fileservice/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/fileservice/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fileservice/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/fileservice/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fileservice/src/main/java/com/lingo/fileservice/service/FileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/fileservice/src/main/java/com/lingo/fileservice/service/FileService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testservice/src/main/resources/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/testservice/src/main/resources/application-docker.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testservice/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/testservice/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,7 +123,7 @@
       <recent name="com.lingo.testservice.model.dto" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.ChatbotApplication">
+  <component name="RunManager" selected="Application.CommentserviceApplication">
     <configuration name="AccountApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.lingo.account.AccountApplication" />
       <module name="account" />
@@ -189,13 +191,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ChatbotApplication" />
-        <item itemvalue="Application.FileserviceApplication" />
-        <item itemvalue="Application.FileserviceApplication" />
-        <item itemvalue="Application.ChatbotApplication" />
-        <item itemvalue="Application.NotificationserviceApplication" />
         <item itemvalue="Application.CommentserviceApplication" />
+        <item itemvalue="Application.NotificationserviceApplication" />
+        <item itemvalue="Application.FileserviceApplication" />
         <item itemvalue="Application.AccountApplication" />
+        <item itemvalue="Application.ChatbotApplication" />
       </list>
     </recent_temporary>
   </component>
