@@ -31,7 +31,7 @@ services:
     environment:
       KC_DB: mysql
       KC_DB_URL: jdbc:mysql://mysql:3306/keycloak
-      KC_DB_USERNAME: keycloak
+      KC_DB_USERNAME: root
       KC_DB_PASSWORD: 123456
       KC_BOOTSTRAP_ADMIN_USERNAME: admin
       KC_BOOTSTRAP_ADMIN_PASSWORD: admin
@@ -70,6 +70,7 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - HOST_IP_ADDRESS=${HOST_IP_ADDRESS}
+      - MANAGEMENT_TRACING_ENABLED=false
 
   accountservice:
     build:
@@ -84,12 +85,19 @@ services:
         condition: service_started
       mysql:
         condition: service_healthy
+      redis:
+        condition: service_healthy
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/accountservice
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=123456
       - HOST_IP_ADDRESS=${HOST_IP_ADDRESS}
+      - SPRING_LIQUIBASE_ENABLED=false
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=none
+      - SPRING_DATA_REDIS_HOST=redis
+      - SPRING_DATA_REDIS_PORT=6379
+      - IDP_URL=http://keycloak:8080
   testservice:
     build:
       context: .
@@ -105,67 +113,13 @@ services:
         condition: service_healthy
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATA_REDIS_HOST=redis
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/testservice
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=123456
       - HOST_IP_ADDRESS=${HOST_IP_ADDRESS}
-  commentservice:
-    build:
-      context: .
-      dockerfile: commentservice/Dockerfile
-    ports:
-      - "9007:9007"
-    networks:
-      - backend
-    depends_on:
-      discoveryserver:
-        condition: service_started
-      mysql:
-        condition: service_healthy
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/commentservice
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=123456
-      - HOST_IP_ADDRESS=${HOST_IP_ADDRESS}
-  chatbot:
-    build:
-      context: .
-      dockerfile: chatbot/Dockerfile
-    ports:
-      - "9006:9006"
-    networks:
-      - backend
-    depends_on:
-      discoveryserver:
-        condition: service_started
-      mysql:
-        condition: service_healthy
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/chatbot
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=123456
-      - HOST_IP_ADDRESS=${HOST_IP_ADDRESS}
-  notificationservice:
-    build:
-      context: .
-      dockerfile: notificationservice/Dockerfile
-    ports:
-      - "9005:9005"
-    networks:
-      - backend
-    depends_on:
-      discoveryserver:
-        condition: service_started
-      mysql:
-        condition: service_healthy
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/notification
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=123456
-      - HOST_IP_ADDRESS=${HOST_IP_ADDRESS}
+      - SPRING_LIQUIBASE_ENABLED=false
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=none
   attemptservice:
     build:
       context: .
@@ -185,6 +139,8 @@ services:
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=123456
       - HOST_IP_ADDRESS=${HOST_IP_ADDRESS}
+      - SPRING_LIQUIBASE_ENABLED=false
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=none
   fileservice:
     build:
       context: .
@@ -194,10 +150,80 @@ services:
     networks:
       - backend
     depends_on:
-      - discoveryserver
+      discoveryserver:
+        condition: service_started
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - HOST_IP_ADDRESS=${HOST_IP_ADDRESS}
+      - MANAGEMENT_TRACING_ENABLED=false
+  commentservice:
+    build:
+      context: .
+      dockerfile: commentservice/Dockerfile
+    ports:
+      - "9007:9007"
+    networks:
+      - backend
+    depends_on:
+      discoveryserver:
+        condition: service_started
+      mysql:
+        condition: service_healthy
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/commentservice
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=123456
+      - HOST_IP_ADDRESS=${HOST_IP_ADDRESS}
+      - SPRING_LIQUIBASE_ENABLED=false
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=none
+  chatbot:
+    build:
+      context: .
+      dockerfile: chatbot/Dockerfile
+    ports:
+      - "9006:9006"
+    networks:
+      - backend
+    depends_on:
+      discoveryserver:
+        condition: service_started
+      mysql:
+        condition: service_healthy
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/chatbot
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=123456
+      - HOST_IP_ADDRESS=${HOST_IP_ADDRESS}
+      - SPRING_LIQUIBASE_ENABLED=false
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=none
+  notificationservice:
+    build:
+      context: .
+      dockerfile: notificationservice/Dockerfile
+    ports:
+      - "9005:9005"
+    networks:
+      - backend
+    depends_on:
+      discoveryserver:
+        condition: service_started
+      mysql:
+        condition: service_healthy
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/notification
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=123456
+      - HOST_IP_ADDRESS=${HOST_IP_ADDRESS}
+      - SPRING_LIQUIBASE_ENABLED=false
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=none
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+      - SPRING_RABBITMQ_USERNAME=admin
+      - SPRING_RABBITMQ_PASSWORD=123456
+      - NOTIFICATION_RABBIT_HOST=rabbitmq
   frontend:
     build:
       context: ./web-app
@@ -213,16 +239,20 @@ services:
       - apigateway
   redis:
     image: redis:7.4.1-alpine
+    container_name: redis
     restart: always
     ports:
       - '6379:6379'
-    environment:
-      - SPRING_DATA_REDIS_HOST
-      - SPRING_DATA_REDIS_PORT
     volumes:
       - redis:/data
     networks:
       - backend
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
   rabbitmq:
     image: rabbitmq:4-management
     container_name: rabbitmq

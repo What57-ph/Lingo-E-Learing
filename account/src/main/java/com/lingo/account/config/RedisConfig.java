@@ -1,5 +1,6 @@
 package com.lingo.account.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -11,11 +12,17 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 public class RedisConfig {
 
+  @Value("${spring.data.redis.host}")
+  private String hostName;
+
+  @Value("${spring.data.redis.port}")
+  private int portName;
+
     @Bean
     public LettuceConnectionFactory redisConnectionFactory() {
         RedisStandaloneConfiguration redisConfig = new RedisStandaloneConfiguration();
-        redisConfig.setHostName("localhost");
-        redisConfig.setPort(6379);
+        redisConfig.setHostName(hostName);
+        redisConfig.setPort(portName);
 
         return new LettuceConnectionFactory(redisConfig);
     }

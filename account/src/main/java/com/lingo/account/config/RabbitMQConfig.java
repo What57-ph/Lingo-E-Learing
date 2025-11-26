@@ -34,16 +34,16 @@ public class RabbitMQConfig {
     return BindingBuilder.bind(queue()).to(exchange()).with(properties.newAccountQueue());
   }
 
-  @Bean
-  public ConnectionFactory connectionFactory() {
-    CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
-    connectionFactory.setHost("localhost");
-    connectionFactory.setPort(5672);
-    connectionFactory.setUsername("admin");
-    connectionFactory.setPassword("123456");
-    connectionFactory.setVirtualHost("/");
-    return connectionFactory;
-  }
+//  @Bean
+//  public ConnectionFactory connectionFactory() {
+//    CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
+//    connectionFactory.setHost("localhost");
+//    connectionFactory.setPort(5672);
+//    connectionFactory.setUsername("admin");
+//    connectionFactory.setPassword("123456");
+//    connectionFactory.setVirtualHost("/");
+//    return connectionFactory;
+//  }
 
 
   @Bean

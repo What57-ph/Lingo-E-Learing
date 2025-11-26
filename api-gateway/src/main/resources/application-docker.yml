@@ -19,10 +19,22 @@ spring:
           uri: lb://attempt-service
           predicates:
             - Path=/api/v1/attempt/**
-        - id: file-service
-          uri: lb://file-service
+        - id: fileservice
+          uri: lb://fileservice
           predicates:
             - Path=/api/v1/file/**
+        - id: chatbot
+          uri: lb://chatbot
+          predicates:
+            - Path=/api/v1/chatbot/**
+        - id: commentservice
+          uri: lb://commentservice
+          predicates:
+            - Path=/api/v1/comment/**
+        - id: notification-service
+          uri: lb://notification-service
+          predicates:
+            - Path=/api/v1/notifications/**, /api/v1/notification-types/**, /api/v1/notification/**, /api/v1/user-settings/**
   security:
     oauth2:
       resourceserver:

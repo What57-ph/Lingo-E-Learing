@@ -12,6 +12,13 @@
       <change beforePath="$PROJECT_DIR$/web-app/src/pages-ATI/IeltsListListening.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/pages-ATI/IeltsListListening.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web-app/src/pages-ATI/IeltsListReading.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/pages-ATI/IeltsListReading.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web-app/src/pages-ATI/IeltsListWriting.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/web-app/src/pages-ATI/IeltsListWriting.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/resources/application-docker.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application-docker.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatbot/src/main/java/com/lingo/chatbot/httpClient/NotifyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/chatbot/src/main/java/com/lingo/chatbot/httpClient/NotifyClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatbot/src/main/java/com/lingo/chatbot/httpClient/TestClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/chatbot/src/main/java/com/lingo/chatbot/httpClient/TestClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fileservice/src/main/resources/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/fileservice/src/main/resources/application-docker.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testservice/src/main/java/com/lingo/testservice/httpClient/NotifyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/testservice/src/main/java/com/lingo/testservice/httpClient/NotifyClient.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,16 +57,12 @@
               <option name="branches">
                 <list>
                   <RecentBranch>
-                    <option name="branchName" value="IntegrateNotify" />
-                    <option name="lastUsedInstant" value="1763306527" />
-                  </RecentBranch>
-                  <RecentBranch>
                     <option name="branchName" value="main" />
-                    <option name="lastUsedInstant" value="1763306495" />
+                    <option name="lastUsedInstant" value="1763559585" />
                   </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="observability" />
-                    <option name="lastUsedInstant" value="1763304798" />
+                    <option name="lastUsedInstant" value="1762099354" />
                   </RecentBranch>
                 </list>
               </option>
@@ -109,8 +112,9 @@
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;chatbotDemo&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Project/ATI_Project/Lingo_Fork&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Project/Lingo/fileservice/src/main/resources/keys&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
@@ -119,15 +123,26 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Project\Lingo\fileservice\src\main\resources" />
+      <recent name="C:\Project\Lingo\fileservice\src\main\resources\keys" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.lingo.chatbot.httpClient" />
-      <recent name="com.lingo.testservice.model.dto.request" />
-      <recent name="com.lingo.testservice.httpClient" />
+      <recent name="com.lingo.testservice.model.dto" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.FileserviceApplication">
+  <component name="RunManager" selected="Application.CommentserviceApplication">
+    <configuration name="AccountApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.lingo.account.AccountApplication" />
+      <module name="account" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.lingo.account.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ChatbotApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.lingo.chatbot.ChatbotApplication" />
       <module name="chatbot" />
@@ -180,25 +195,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestserviceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.lingo.testservice.TestserviceApplication" />
-      <module name="testservice" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.lingo.testservice.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.FileserviceApplication" />
         <item itemvalue="Application.TestserviceApplication" />
-        <item itemvalue="Application.NotificationserviceApplication" />
         <item itemvalue="Application.CommentserviceApplication" />
+        <item itemvalue="Application.NotificationserviceApplication" />
+        <item itemvalue="Application.FileserviceApplication" />
+        <item itemvalue="Application.AccountApplication" />
         <item itemvalue="Application.ChatbotApplication" />
       </list>
     </recent_temporary>

@@ -88,6 +88,11 @@ public class AccountService {
             .orElseThrow(() -> new NotFoundException(Constants.ErrorCode.USER_NOT_FOUND));
     return accountMapper.toResDTO(account);
   }
+  public ResAccountDTO getAccountByEmail(String email) throws NotFoundException {
+    Account account = (Account) this.accountRepository.findByEmail(email)
+            .orElseThrow(() -> new NotFoundException(Constants.ErrorCode.USER_NOT_FOUND));
+    return accountMapper.toResDTO(account);
+  }
 
   public ResPaginationDTO getAllAccounts(
           int pageNo,

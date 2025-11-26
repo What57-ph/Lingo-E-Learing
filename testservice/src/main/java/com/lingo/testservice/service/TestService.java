@@ -6,7 +6,7 @@ import com.lingo.testservice.mapper.MediaResourceMapper;
 import com.lingo.testservice.mapper.TestMapper;
 import com.lingo.testservice.model.MediaResource;
 import com.lingo.testservice.model.Test;
-import com.lingo.testservice.model.dto.request.ReqBroadcast;
+import com.lingo.testservice.model.dto.ReqBroadCast;
 import com.lingo.testservice.model.dto.request.resource.ReqCreateResourceDTO;
 import com.lingo.testservice.model.dto.request.test.ReqCreateTestDTO;
 import com.lingo.testservice.model.dto.request.test.ReqUpdateTestDTO;
@@ -61,6 +61,7 @@ class TestServiceImpl implements TestService {
 
         Test test = mapper.toTest(dto);
         test.setTitle(test.getTitle().replaceAll(" ", "_"));
+        test.setCategory(dto.getCategory());
         Test savedTest = testRepository.save(test);
 
         resourceOptional.ifPresent(resource -> {
@@ -75,7 +76,7 @@ class TestServiceImpl implements TestService {
                     .resourceContent(dto.getMediaUrl())
                     .test(savedTest).build());
         }
-        ReqBroadcast requestNotify=new ReqBroadcast();
+        ReqBroadCast requestNotify=new ReqBroadCast();
         requestNotify.setNotificationTypeId(7);
         requestNotify.setUrl(String.format("/tests/%s/%s", response.getId(), response.getTitle().replaceAll("_","-")));
         requestNotify.setMessage(dto.getTitle().replaceAll("_"," ") + " vừa được thêm, xem ngay");
@@ -105,7 +106,7 @@ class TestServiceImpl implements TestService {
         });
 
         Test entity = testRepository.save(testOptional.get());
-        ReqBroadcast requestNotify=new ReqBroadcast();
+        ReqBroadCast requestNotify=new ReqBroadCast();
         requestNotify.setNotificationTypeId(7);
         requestNotify.setUrl(String.format("/tests/%s/%s", entity.getId(), entity.getTitle().replaceAll("_","-")));
         requestNotify.setMessage(dto.getTitle().replaceAll("_"," ") + " vừa được cập nhật, xem ngay");

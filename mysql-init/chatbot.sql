@@ -19,6 +19,8 @@
 -- Table structure for table `spring_ai_chat_memory`
 --
 
+USE chatbot;
+
 DROP TABLE IF EXISTS `spring_ai_chat_memory`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;

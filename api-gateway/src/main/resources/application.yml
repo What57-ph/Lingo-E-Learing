@@ -29,11 +29,11 @@ spring:
           predicates:
             - Path=/api/v1/file/**
 
-        - id: file-service
+        - id: chatbot
           uri: http://localhost:9006
           predicates:
             - Path=/api/v1/chatbot/**
-        - id: file-service
+        - id: comment-service
           uri: http://localhost:9007
           predicates:
             - Path=/api/v1/comment/**

@@ -1,7 +1,10 @@
 package com.lingo.chatbot.service;
 
 import com.lingo.chatbot.httpClient.NotifyClient;
+import com.lingo.chatbot.httpClient.TestClient;
 import com.lingo.chatbot.model.ChatRequest;
+import com.lingo.common_library.dto.ReqNotificationPost;
+import com.lingo.common_library.dto.ResNotification;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.ai.chat.client.ChatClient;
@@ -23,85 +26,91 @@ import java.util.List;
 @Service
 @FieldDefaults(level= AccessLevel.PRIVATE)
 public class ChatbotService {
+
     final ChatClient chatClient;
     final JdbcChatMemoryRepository jdbcChatMemoryRepository;
     final ChatMemory chatMemory;
     final NotifyClient notifyClient;
-//    final JdbcTemplate jdbcTemplate;
-String systemPrompt = """
-You are the official AI assistant of an English-learning platform specializing in TOEIC and IELTS preparation.
-You act as a friendly, professional, and knowledgeable tutor who helps users understand the exams, improve their English skills,
-and navigate the website’s learning features such as practice tests, study tools, AI evaluations, and progress tracking.
-You do not mention anything related to coding, system architecture, or technical implementation; instead, you focus entirely on providing clear explanations,
-helpful study guidance, and accurate information about the platform’s services. When users request practice, you can create authentic TOEIC or IELTS 
-exercises for any skill. When evaluating their responses, you always provide an estimated score or band with reasoning, corrections when applicable, a brief explanation of mistakes,
-and practical improvement tips. Your communication style is concise, friendly, and easy to understand, responding in short paragraphs with direct value. At the end of replies, 
-you may ask a short clarifying question only when more context is needed.
+    final InstructionService instructionService;
+    final TestClient testClient;
+    String systemPrompt = """
+You are the official AI assistant for Lingo - English learning website,
+you also are Ielts tutor and can give user some recommendation about english
+like answer question of a test, give user guildline.
 """;
 
-
-    public ChatbotService(ChatClient.Builder chatClient, JdbcChatMemoryRepository jdbcChatMemoryRepository, ChatMemory chatMemoryInit, NotifyClient notifyClient) {
-        this.chatMemory=chatMemoryInit;
+    public ChatbotService(
+            ChatClient.Builder chatClient,
+            JdbcChatMemoryRepository jdbcChatMemoryRepository,
+            ChatMemory chatMemoryInit,
+            NotifyClient notifyClient,
+            InstructionService instructionService,
+            TestClient testClient
+    ) {
+        this.chatMemory = chatMemoryInit;
         this.jdbcChatMemoryRepository = jdbcChatMemoryRepository;
-        this.notifyClient=notifyClient;
-//        this.jdbcTemplate= jdbcTemplate;
-
-//        ChatMemoryRepository chatMemoryRepository = JdbcChatMemoryRepository.builder()
-//                .jdbcTemplate(jdbcTemplate)
-//                .dialect(new MysqlChatMemoryRepositoryDialect())
-//                .build();
-
-        ChatMemory chatMemory= MessageWindowChatMemory.builder()
+        this.notifyClient = notifyClient;
+        this.instructionService = instructionService;
+        this.testClient=testClient;
+        ChatMemory chatMemory = MessageWindowChatMemory.builder()
                 .chatMemoryRepository(jdbcChatMemoryRepository)
                 .maxMessages(36)
                 .build();
-
 
         this.chatClient = chatClient
                 .defaultAdvisors(MessageChatMemoryAdvisor.builder(chatMemory).build())
                 .build();
     }
 
-    public String chat(ChatRequest request){
+    public String chat(ChatRequest request) {
+
         String conversationId = request.getUserId();
 
-        SystemMessage systemMessage= new SystemMessage(this.systemPrompt);
-        UserMessage userMessage = new UserMessage(request.getMessage());
-        Prompt prompt = new Prompt(systemMessage, userMessage);
+        BotNotificationService tools = new BotNotificationService(notifyClient);
+        tools.setUserId(conversationId);
+
+        String finalPrompt = systemPrompt +
+                "\n\nInstruction from system documents:\n" +
+                instructionService.getInstructions();
+
+        Prompt prompt = new Prompt(
+                new SystemMessage(finalPrompt),
+                new UserMessage(request.getMessage())
+        );
 
         return chatClient
                 .prompt(prompt)
-                .tools(new ApplicationProvidedService(notifyClient))
-                .advisors(advisorSpec -> advisorSpec.param(
-                        ChatMemory.CONVERSATION_ID, conversationId
-                ))
+                .tools(tools, new ReminderService(testClient))
+                .advisors(spec -> spec.param(ChatMemory.CONVERSATION_ID, conversationId))
                 .call()
                 .content();
     }
 
-    public String chatWithMedia(MultipartFile file, String message, String userId){
-        Media media =  Media.builder()
+    public String chatWithMedia(MultipartFile file, String message, String userId) {
+
+        BotNotificationService tools = new BotNotificationService(notifyClient);
+        tools.setUserId(userId); // <-- same fix here
+
+        Media media = Media.builder()
                 .mimeType(MimeTypeUtils.parseMimeType(file.getContentType()))
                 .data(file.getResource())
                 .build();
-        ChatOptions chatOptions = ChatOptions.builder()
-                .temperature(0D)
-                .build();
+
+        String finalPrompt = systemPrompt +
+                "\n\nInstruction from system documents:\n" +
+                instructionService.getInstructions();
+
         return chatClient
                 .prompt()
-                .advisors(advisorSpec -> advisorSpec.param(
-                        ChatMemory.CONVERSATION_ID, String.valueOf(userId)
-                        )
-                )
-                .system(this.systemPrompt)
-                .user(promptUserSpec ->
-                        promptUserSpec
-                                .media(media)
-                                .text(message))
-                .call().content();
+                .tools(tools)  // <-- FIXED (notifyClient was wrong)
+                .advisors(spec -> spec.param(ChatMemory.CONVERSATION_ID, userId))
+                .system(finalPrompt)
+                .user(u -> u.media(media).text(message))
+                .call()
+                .content();
     }
 
-    public List<Message> getConversationMessage(String conversationsId){
-        return chatMemory.get(conversationsId);
+    public List<Message> getConversationMessage(String id) {
+        return chatMemory.get(id);
     }
 }
