@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "test-service",url = "http://localhost:8080/api/v1/test")
+@FeignClient(name = "test-service",url = "http://apigateway:8080/api/v1/test")
 public interface TestClient {
     @GetMapping("/all")
     ResponseEntity<ResPaginationDTO> getAll(
