@@ -64,6 +64,9 @@ Lingo is a comprehensive web application built on a **microservices architecture
 ---
 
 ### 5. Installation & Setup
+Fileservice note
+Because of security of google cloud, add the json file in this drive link to folder resources/keys inside file service (fileservice\src\main\resources\keys)
+https://drive.google.com/drive/folders/12qu_I4HqqB8p-u7c_sSPUGLrQ1SbCxpA
 
 ```bash
 git clone https://github.com/ducsieunhan/lingo.git
